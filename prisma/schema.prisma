@@ -1,0 +1,215 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean
+  image         String
+  createdAt     DateTime
+  updatedAt     DateTime
+  sessions      Session[]
+  accounts      Account[]
+  UserInfo      UserInfo?
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
+}
+
+model UserInfo {
+  id     String  @id @default(uuid())
+  userId String? @unique
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Personal Info
+  name          String
+  age           Int
+  gender        String?
+  maritalStatus String
+  location      String
+
+  // Dependents (array)
+  dependents Dependent[] @relation("UserDependents")
+
+  // Income
+  primaryIncome   Float
+  occupation      String
+  jobType         String
+  extraIncome     Float
+  incomeFrequency String
+
+  // Assets
+  cashSavings  Float
+  investments  Float
+  realEstate   Float
+  vehicles     Float
+  otherAssets  Float
+  liquidAssets Float
+
+  // Debts
+  creditCardDebt   Float
+  otherLiabilities Float
+
+  // Mortgage
+  mortgageBalance        Float
+  mortgageInterestRate   Float
+  mortgageMonthlyPayment Float
+  mortgageYearsLeft      Int
+
+  // Loans (array)
+  loans Loan[]
+
+  // Existing EMIs (array)
+  existingEMIs EMI[]
+
+  // Expenses
+  housing        Float
+  utilities      Float
+  insurance      Float
+  food           Float
+  transportation Float
+  healthcare     Float
+  education      Float
+  entertainment  Float
+  personalCare   Float
+  childcare      Float
+  miscellaneous  Float
+
+  // Goals
+  shortTermGoals Goal[] @relation("ShortTermGoals")
+  longTermGoals  Goal[] @relation("LongTermGoals")
+  riskTolerance  String
+
+  // Lifestyle
+  spendingHabits         String
+  carType                String?
+  carNewOrUsed           String?
+  carBudget              Float
+  carBrandPreference     String?
+  carFinancingPreference String?
+  plannedPurchases       Purchase[]
+
+  // Additional Context
+  creditScore         Int?
+  jobStability        String
+  retirementAge       Int
+  emergencyFundMonths Int
+  taxRate             Float
+
+  @@map("user_info")
+}
+
+model Dependent {
+  id           String    @id @default(uuid())
+  name         String
+  age          Int
+  relationship String
+  userInfoId   String?
+  userInfo     UserInfo? @relation(fields: [userInfoId], references: [id], onDelete: Cascade, name: "UserDependents")
+}
+
+model Loan {
+  id             String    @id @default(uuid())
+  type           String
+  balance        Float
+  interestRate   Float
+  monthlyPayment Float
+  remainingTerm  Int
+  userInfoId     String?
+  userInfo       UserInfo? @relation(fields: [userInfoId], references: [id], onDelete: Cascade)
+}
+
+model EMI {
+  id         String    @id @default(uuid())
+  purpose    String
+  amount     Float
+  duration   Int
+  userInfoId String?
+  userInfo   UserInfo? @relation(fields: [userInfoId], references: [id], onDelete: Cascade)
+}
+
+model Goal {
+  id                  String    @id @default(uuid())
+  description         String
+  targetAmount        Float
+  timeline            String
+  priority            String
+  type                GoalType // "short" or "long"
+  userInfoShortTermId String?
+  userInfoLongTermId  String?
+  userInfoShortTerm   UserInfo? @relation("ShortTermGoals", fields: [userInfoShortTermId], references: [id])
+  userInfoLongTerm    UserInfo? @relation("LongTermGoals", fields: [userInfoLongTermId], references: [id])
+}
+
+enum GoalType {
+  short
+  long
+}
+
+model Purchase {
+  id            String    @id @default(uuid())
+  item          String
+  estimatedCost Float
+  timeline      String
+  userInfoId    String?
+  userInfo      UserInfo? @relation(fields: [userInfoId], references: [id], onDelete: Cascade)
+}
