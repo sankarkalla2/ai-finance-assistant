@@ -9,17 +9,19 @@ import { Plus, Minus } from 'lucide-react';
 import type { FormData } from '@/modules/onboarding/lib/onboarding-form-schema';
 
 const GoalsStep = () => {
-  const { register, control, formState: { errors }, setValue } = useFormContext<FormData>();
+  const { register, control,watch, formState: { errors }, setValue } = useFormContext<FormData>();
   
   const { fields: shortTermFields, append: appendShortTerm, remove: removeShortTerm } = useFieldArray({
     control,
     name: 'goals.shortTermGoals',
   });
-
   const { fields: longTermFields, append: appendLongTerm, remove: removeLongTerm } = useFieldArray({
     control,
     name: 'goals.longTermGoals',
   });
+
+  const riskTolerance = watch('goals.riskTolerance');
+
 
   const addShortTermGoal = () => {
     appendShortTerm({ description: '', targetAmount: 0, timeline: '', priority: 'medium' as const });
@@ -38,7 +40,7 @@ const GoalsStep = () => {
         <CardContent>
           <div className="space-y-2">
             <Label htmlFor="riskTolerance">Investment Risk Tolerance *</Label>
-            <Select onValueChange={(value) => setValue('goals.riskTolerance', value)}>
+            <Select onValueChange={(value) => setValue('goals.riskTolerance', value)} value={riskTolerance}>
               <SelectTrigger>
                 <SelectValue placeholder="Select your risk tolerance" />
               </SelectTrigger>
@@ -96,7 +98,7 @@ const GoalsStep = () => {
                   </div>
                   <div className="space-y-2">
                     <Label>Priority</Label>
-                    <Select onValueChange={(value) => setValue(`goals.shortTermGoals.${index}.priority`, value as 'high' | 'medium' | 'low')}>
+                    <Select onValueChange={(value) => setValue(`goals.shortTermGoals.${index}.priority`, value as 'high' | 'medium' | 'low')} >
                       <SelectTrigger>
                         <SelectValue placeholder="Priority" />
                       </SelectTrigger>

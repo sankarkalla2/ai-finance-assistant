@@ -1,13 +1,27 @@
-import React from 'react';
-import { useFormContext } from 'react-hook-form';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import type { FormData } from '@/modules/onboarding/lib/onboarding-form-schema';
+import React from "react";
+import { useFormContext } from "react-hook-form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { FormData } from "@/modules/onboarding/lib/onboarding-form-schema";
 
 const IncomeStep = () => {
-  const { register, formState: { errors }, setValue } = useFormContext<FormData>();
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useFormContext<FormData>();
+
+  const jobType = watch("income.jobType");
+  const incomeFrequency = watch("income.incomeFrequency");
 
   return (
     <div className="space-y-6">
@@ -18,16 +32,20 @@ const IncomeStep = () => {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="primaryIncome">Monthly Income (After Tax) *</Label>
+              <Label htmlFor="primaryIncome">
+                Monthly Income (After Tax) *
+              </Label>
               <Input
                 id="primaryIncome"
                 type="number"
-                {...register('income.primaryIncome', { valueAsNumber: true })}
+                {...register("income.primaryIncome", { valueAsNumber: true })}
                 placeholder="e.g., 5000"
                 className="w-full"
               />
               {errors.income?.primaryIncome && (
-                <p className="text-sm text-red-600">{errors.income.primaryIncome.message}</p>
+                <p className="text-sm text-red-600">
+                  {errors.income.primaryIncome.message}
+                </p>
               )}
             </div>
 
@@ -35,18 +53,23 @@ const IncomeStep = () => {
               <Label htmlFor="occupation">Occupation *</Label>
               <Input
                 id="occupation"
-                {...register('income.occupation')}
+                {...register("income.occupation")}
                 placeholder="e.g., Software Engineer"
                 className="w-full"
               />
               {errors.income?.occupation && (
-                <p className="text-sm text-red-600">{errors.income.occupation.message}</p>
+                <p className="text-sm text-red-600">
+                  {errors.income.occupation.message}
+                </p>
               )}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="jobType">Employment Type *</Label>
-              <Select onValueChange={(value) => setValue('income.jobType', value)}>
+              <Select
+                value={jobType}
+                onValueChange={(value) => setValue("income.jobType", value)}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select employment type" />
                 </SelectTrigger>
@@ -61,13 +84,20 @@ const IncomeStep = () => {
                 </SelectContent>
               </Select>
               {errors.income?.jobType && (
-                <p className="text-sm text-red-600">{errors.income.jobType.message}</p>
+                <p className="text-sm text-red-600">
+                  {errors.income.jobType.message}
+                </p>
               )}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="incomeFrequency">Pay Frequency *</Label>
-              <Select onValueChange={(value) => setValue('income.incomeFrequency', value)}>
+              <Select
+                value={incomeFrequency}
+                onValueChange={(value) =>
+                  setValue("income.incomeFrequency", value)
+                }
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select pay frequency" />
                 </SelectTrigger>
@@ -80,7 +110,9 @@ const IncomeStep = () => {
                 </SelectContent>
               </Select>
               {errors.income?.incomeFrequency && (
-                <p className="text-sm text-red-600">{errors.income.incomeFrequency.message}</p>
+                <p className="text-sm text-red-600">
+                  {errors.income.incomeFrequency.message}
+                </p>
               )}
             </div>
           </div>
@@ -97,7 +129,7 @@ const IncomeStep = () => {
             <Input
               id="extraIncome"
               type="number"
-              {...register('income.extraIncome', { valueAsNumber: true })}
+              {...register("income.extraIncome", { valueAsNumber: true })}
               placeholder="e.g., 1000 (rental, investments, side hustle)"
               className="w-full"
             />
@@ -105,7 +137,9 @@ const IncomeStep = () => {
               Include rental income, investments, bonuses, freelance work, etc.
             </p>
             {errors.income?.extraIncome && (
-              <p className="text-sm text-red-600">{errors.income.extraIncome.message}</p>
+              <p className="text-sm text-red-600">
+                {errors.income.extraIncome.message}
+              </p>
             )}
           </div>
         </CardContent>

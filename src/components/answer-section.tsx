@@ -30,6 +30,8 @@ export function AnswerSection({
 }: AnswerSectionProps) {
   const enableShare = process.env.NEXT_PUBLIC_ENABLE_SHARE === 'true'
 
+
+  
   const handleReload = () => {
     if (reload) {
       return reload(messageId)

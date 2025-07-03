@@ -15,6 +15,9 @@ const PersonalInfoStep = () => {
     name: 'personalInfo.dependents',
   });
 
+  const gender = watch('personalInfo.gender');
+  const maritalStatus = watch('personalInfo.maritalStatus')
+
   const addDependent = () => {
     append({ name: '', age: 0, relationship: '' });
   };
@@ -51,7 +54,7 @@ const PersonalInfoStep = () => {
 
         <div className="space-y-2">
           <Label htmlFor="gender">Gender (Optional)</Label>
-          <Select onValueChange={(value) => setValue('personalInfo.gender', value)}>
+          <Select onValueChange={(value) => setValue('personalInfo.gender', value)} value={gender}>
             <SelectTrigger>
               <SelectValue placeholder="Select gender" />
             </SelectTrigger>
@@ -66,9 +69,9 @@ const PersonalInfoStep = () => {
 
         <div className="space-y-2">
           <Label htmlFor="maritalStatus">Marital Status *</Label>
-          <Select onValueChange={(value) => setValue('personalInfo.maritalStatus', value)}>
+          <Select onValueChange={(value) => setValue('personalInfo.maritalStatus', value)} value={maritalStatus}>
             <SelectTrigger>
-              <SelectValue placeholder="Select marital status" defaultValue={} />
+              <SelectValue placeholder="Select marital status" />
             </SelectTrigger >
             <SelectContent>
               <SelectItem value="single">Single</SelectItem>
@@ -95,6 +98,7 @@ const PersonalInfoStep = () => {
             <p className="text-sm text-red-600">{errors.personalInfo.location.message}</p>
           )}
         </div>
+        
       </div>
 
       <Card>

@@ -1,14 +1,10 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { ChatRequestOptions, JSONValue, Message, UIMessage } from "ai";
 import { useEffect, useMemo, useState } from "react";
-import { RenderMessage } from "../../../components/render-message";
-// import { ToolSection } from "./tool-section";
-import { Spinner } from "../../../components/ui/spinner";
-import { MemoizedReactMarkdown } from "@/components/mark-down";
 import { MemoizedMarkdown } from "../../../components/ui/markdown-content";
-// Import section structure interface
+import { AvatarProvider } from "@/components/avatar";
+
 interface ChatSection {
   id: string;
   userMessage: Message;
@@ -30,6 +26,8 @@ interface ChatMessagesProps {
     options?: ChatRequestOptions
   ) => Promise<string | null | undefined>;
   messages: UIMessage[];
+  userImgUrl: string | null | undefined;
+  userName?: string;
 }
 
 export function ChatMessages({
@@ -43,6 +41,8 @@ export function ChatMessages({
   onUpdateMessage,
   reload,
   messages,
+  userImgUrl,
+  userName,
 }: ChatMessagesProps) {
   const [openStates, setOpenStates] = useState<Record<string, boolean>>({});
   const manualToolCallId = "manual-tool-call";
@@ -126,8 +126,26 @@ export function ChatMessages({
         ref={scrollContainerRef}
       >
         {messages.map((message, idx) => (
-          <div key={idx} className="mb-4">
-            <MemoizedMarkdown content={message.content} id={idx.toString()} />
+          <div
+            key={idx}
+            className="mb-4 flex gap-x-2 items-start justify-start rounded-md leading-7 [&:not(:first-child)]:mt-6"
+          >
+            <span>
+              {message.role === "user" ? (
+                <AvatarProvider
+                  imgUrl={`${userImgUrl}`}
+                  fallbackName={userName || "N"}
+                />
+              ) : (
+                <AvatarProvider
+                  imgUrl="https://github.com/evilrabbit.png"
+                  fallbackName="AI"
+                />
+              )}
+            </span>
+            <div>
+              <MemoizedMarkdown content={message.content} id={idx.toString()} />
+            </div>
           </div>
         ))}
       </div>

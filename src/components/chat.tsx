@@ -11,6 +11,8 @@ import { toast } from "sonner";
 
 import { ChatPanel } from "../modules/chat/views/chat-panel";
 import { ChatMessages } from "../modules/chat/views/chat-messages";
+import { useQueryClient } from "@tanstack/react-query";
+import { authClient } from "@/lib/auth-client";
 
 // Define section structure
 interface ChatSection {
@@ -23,14 +25,17 @@ export function Chat({
   id,
   savedMessages = [],
   query,
+  userImgUrl,
 }: {
   id: string;
   savedMessages?: Message[];
   query?: string;
+  userImgUrl: string | undefined | null;
 }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
-
+  const session = authClient.useSession();
+  const queryClient = useQueryClient();
   const {
     messages,
     input,
@@ -46,13 +51,17 @@ export function Chat({
     reload,
   } = useChat({
     initialMessages: savedMessages,
-    id: "search",
+    id: "chat",
     body: {
       id,
     },
     onFinish: () => {
-      window.history.replaceState({}, "", `/search/${id}`);
+      window.history.replaceState({}, "", `/chat/${id}`);
       window.dispatchEvent(new CustomEvent("chat-history-updated"));
+
+      if (messages.length < 3) {
+        queryClient.invalidateQueries({ queryKey: ["get-history"] });
+      }
     },
     onError: (error) => {
       toast.error(`Error in chat: ${error.message}`);
@@ -200,6 +209,7 @@ export function Chat({
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setData(undefined);
+
     handleSubmit(e);
   };
 
@@ -222,6 +232,7 @@ export function Chat({
         onUpdateMessage={handleUpdateAndReloadMessage}
         reload={handleReloadFrom}
         messages={messages}
+        userImgUrl={userImgUrl}
       />
 
       <ChatPanel

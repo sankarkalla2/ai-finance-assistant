@@ -30,10 +30,10 @@ import AdditionalContextStep from "@/modules/onboarding/components/onboarding-ad
 // import { useToast } from '@/hooks/use-toast';
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { UserInfo } from "@/generated/prisma";
 import { OnboardedUserType } from "../types";
 import { z } from "zod";
 import { onboardNewUser } from "../server/onboarding-user";
+import { useRouter } from "next/navigation";
 
 const steps = [
   { id: "personal", title: "Personal Info", component: PersonalInfoStep },
@@ -62,6 +62,7 @@ const MultiStepForm = ({ userInfo }: OnboardedUserType) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   //   const { toast: shadcnToast } = useToast();
 
+  const router = useRouter();
   const methods = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: "onChange",
@@ -182,6 +183,7 @@ const MultiStepForm = ({ userInfo }: OnboardedUserType) => {
       console.log(res);
 
       toast.success("Your financial profile has been created successfully!");
+      router.push("/chat");
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
     } finally {

@@ -28,12 +28,12 @@ export const useChatView = (savedMessages: Message[] | [], id: string) => {
     reload,
   } = useChat({
     initialMessages: savedMessages,
-    id: "search",
+    id: "chat",
     body: {
       id,
     },
     onFinish: () => {
-      window.history.replaceState({}, "", `/search/${id}`);
+      window.history.replaceState({}, "", `/chat/${id}`);
       window.dispatchEvent(new CustomEvent("chat-history-updated"));
     },
     onError: (error) => {
@@ -201,6 +201,6 @@ export const useChatView = (savedMessages: Message[] | [], id: string) => {
     append,
     isAtBottom,
     stop,
-    onSubmit
+    onSubmit,
   };
 };

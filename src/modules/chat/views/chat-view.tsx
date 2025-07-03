@@ -24,10 +24,12 @@ export function Chat({
   id,
   savedMessages = [],
   query,
+  userImgUrl
 }: {
   id: string;
   savedMessages?: Message[];
-  query?: string;
+  query?: string
+  userImgUrl: string | undefined | null
 }) {
   const {
     messages,
@@ -67,6 +69,8 @@ export function Chat({
         onUpdateMessage={handleUpdateAndReloadMessage}
         reload={handleReloadFrom}
         messages={messages}
+        userImgUrl={userImgUrl}
+
       />
 
       <ChatPanel

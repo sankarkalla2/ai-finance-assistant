@@ -1,11 +1,19 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-// If your Prisma file is located elsewhere, you can change the path
+import {
+  polar,
+  checkout,
+  portal,
+  usage,
+  webhooks,
+} from "@polar-sh/better-auth";
 import { db } from "./db";
+import { polarClient } from "./utils/polar-client";
+
 
 export const auth = betterAuth({
   database: prismaAdapter(db, {
-    provider: "postgresql", // or "mysql", "postgresql", ...etc
+    provider: "postgresql",
   }),
   socialProviders: {
     google: {
@@ -17,7 +25,17 @@ export const auth = betterAuth({
       clientSecret: process.env.APPLE_CLIENT_SECRET!,
     },
   },
-
-  /** if no database is provided, the user data will be stored in memory.
-   * Make sure to provide a database to persist user data **/
+  plugins: [
+    polar({
+      client: polarClient,
+      createCustomerOnSignUp: true,
+      use: [
+        checkout({
+          successUrl: "/upgrade",
+          authenticatedUsersOnly: true,
+        }),
+        portal(),
+      ],
+    }),
+  ],
 });

@@ -3,7 +3,7 @@ import { generateId } from "ai";
 
 const ChatPage = () => {
   const id = generateId();
-  return <Chat id={id} />;
+  return <Chat id={id} userImgUrl={""} />;
 };
 
 export default ChatPage;

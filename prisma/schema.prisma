@@ -15,16 +15,21 @@ datasource db {
 }
 
 model User {
-  id            String    @id
+  id            String     @id
   name          String
   email         String
   emailVerified Boolean
   image         String
   createdAt     DateTime
   updatedAt     DateTime
+  lastReset     DateTime   @default(now())
+  reqCount      Int        @default(0)
   sessions      Session[]
   accounts      Account[]
   UserInfo      UserInfo?
+  prompt        String     @default("") @db.Text
+  Chat          Chat[]
+  Feedback      Feedback[]
 
   @@unique([email])
   @@map("user")
@@ -212,4 +217,38 @@ model Purchase {
   timeline      String
   userInfoId    String?
   userInfo      UserInfo? @relation(fields: [userInfoId], references: [id], onDelete: Cascade)
+}
+
+model Chat {
+  id        String    @id
+  messages  Message[]
+  title     String    @default("new chat")
+  createdAt DateTime  @default(now())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  role      Role
+  createdAt DateTime @default(now())
+  content   String
+  chatid    String
+  chat      Chat     @relation(references: [id], fields: [chatid], onDelete: Cascade)
+}
+
+enum Role {
+  user
+  system
+  data
+  assistant
+}
+
+model Feedback {
+  id        String   @id @default(uuid())
+  feedback  String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reaction  Int
+  createdAt DateTime @default(now())
 }
