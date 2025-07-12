@@ -1,23 +1,11 @@
-import {
-  PrismaClient,
-  Prisma,
-  Dependent,
-  UserInfo,
-  Loan,
-  EMI,
-  Goal,
-  Purchase,
-} from "@/generated/prisma";
+import { PrismaClient, Prisma, UserInfo, Goal, DeptBreakDown } from "@/generated/prisma";
 
 export type OnboardedUserType = {
   userInfo:
     | (UserInfo & {
-        dependents: Dependent[];
-        loans: Loan[];
-        existingEMIs: EMI[];
-        shortTermGoals: Goal[];
-        longTermGoals: Goal[];
-        plannedPurchases: Purchase[];
+        goals: Goal[];
+        deptBreakDowns: DeptBreakDown[]
       })
-    | null | undefined
+    | null
+    | undefined;
 };

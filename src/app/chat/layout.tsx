@@ -1,3 +1,4 @@
+import { MobileSidebarOpen } from "@/components/mobile-sidebar-open";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { auth } from "@/lib/auth";
 import { AppSidebar } from "@/modules/chat/components/chat-app-sidebar";
@@ -8,7 +9,6 @@ import {
   QueryClient,
   queryOptions,
 } from "@tanstack/react-query";
-import { headers } from "next/headers";
 import React from "react";
 
 interface ChatLayoutProps {
@@ -16,7 +16,6 @@ interface ChatLayoutProps {
 }
 const ChatLayout = async ({ children }: ChatLayoutProps) => {
   const queryClient = new QueryClient();
-
   void queryClient.prefetchQuery(
     queryOptions({
       queryKey: ["get-history"],
@@ -27,11 +26,12 @@ const ChatLayout = async ({ children }: ChatLayoutProps) => {
   return (
     <SidebarProvider>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <AppSidebar
-          
-        />
+        <AppSidebar />
       </HydrationBoundary>
-      <SidebarInset>{children}</SidebarInset>
+      <SidebarInset>
+        <MobileSidebarOpen />
+        {children}
+      </SidebarInset>
     </SidebarProvider>
   );
 };

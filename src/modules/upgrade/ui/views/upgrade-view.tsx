@@ -34,6 +34,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import Pricing from "@/modules/landing-page/ui/components/pricing";
 
 const UpgradeView = () => {
   const { data: products, isLoading } = useQuery({
@@ -150,164 +151,14 @@ const UpgradeView = () => {
     {
       icon: <Users className="h-4 w-4" />,
       title: "Priority Support",
-      description:
-        "Priority email support with 12-hour response time",
+      description: "Priority email support with 12-hour response time",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen">
       <div className="container mx-auto px-4 py-20">
-        {/* Header */}
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
-            <Sparkles className="h-4 w-4" />
-            AI-Powered Financial Intelligence
-          </div>
-          <h1 className="text-5xl font-bold tracking-tight mb-6 bg-gradient-to-r from-slate-800 to-blue-700 bg-clip-text text-transparent">
-            Choose Your Financial Success Plan
-          </h1>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            Transform your financial future with AI-powered insights. Start with
-            our free plan or unlock the full potential of GPT-4o financial
-            expertise.
-          </p>
-        </div>
-
-        {/* Pricing Cards */}
-        <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {/* Free Plan */}
-          <Card className="relative border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-xl bg-white/80 backdrop-blur-sm">
-            <CardHeader className="text-center pb-8">
-              <div className="mx-auto w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center mb-4">
-                <Calculator className="h-6 w-6 text-slate-600" />
-              </div>
-              <CardTitle className="text-3xl font-bold text-slate-800">
-                Free Starter
-              </CardTitle>
-              <CardDescription className="text-base text-slate-600 mt-2">
-                Perfect for getting started with AI financial guidance
-              </CardDescription>
-              <div className="mt-6">
-                <span className="text-5xl font-bold text-slate-800">$0</span>
-                <span className="text-slate-500 text-lg">/month</span>
-              </div>
-              <p className="text-sm text-slate-500 mt-2">
-                No credit card required
-              </p>
-            </CardHeader>
-
-            <CardContent className="space-y-6">
-              <ul className="space-y-4">
-                {freeFeatures.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mt-0.5">
-                      <Check className="h-4 w-4 text-green-600" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-medium text-slate-800 text-sm">
-                        {feature.title}
-                      </h4>
-                      <p className="text-xs text-slate-600 mt-1">
-                        {feature.description}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-
-            <CardFooter className="pt-8">
-              <Button
-                variant="outline"
-                className="w-full h-12 text-base font-medium border-2 hover:bg-slate-50"
-                size="lg"
-              >
-                Start Free Today
-              </Button>
-            </CardFooter>
-          </Card>
-
-          {/* Pro Plan */}
-          {products?.map((product) => {
-            const isPro = currenSubscription
-              ? currenSubscription.productId === product.id
-              : false;
-
-            let buttonText = "Upgrade to Pro";
-            let onClick = () => authClient.checkout({ products: [product.id] });
-
-            if (isPro) {
-              buttonText = "Manage Subscription";
-              onClick = () => authClient.customer.portal();
-            }
-
-            return (
-              <Card
-                className="relative border-2 border-blue-300 bg-gradient-to-br from-blue-50/80 to-indigo-50/80 hover:shadow-2xl transition-all duration-300 backdrop-blur-sm"
-                key={product.id}
-              >
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-                  <Badge className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 flex items-center gap-2 shadow-lg">
-                    <Crown className="h-4 w-4" />
-                    Most Popular
-                  </Badge>
-                </div>
-
-                <CardHeader className="text-center pb-8">
-                  <div className="mx-auto w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mb-4">
-                    <Sparkles className="h-6 w-6 text-white" />
-                  </div>
-                  <CardTitle className="text-3xl font-bold text-slate-800">
-                    Pro Intelligence
-                  </CardTitle>
-                  <CardDescription className="text-base text-slate-600 mt-2">
-                    Advanced AI financial advisor with unlimited access to
-                    GPT-4o
-                  </CardDescription>
-                  <div className="mt-6">
-                    <span className="text-5xl font-bold text-slate-800">
-                      $9
-                    </span>
-                    <span className="text-slate-500 text-lg">/month</span>
-                  </div>
-                  <p className="text-sm text-slate-500 mt-2">Cancel anytime</p>
-                </CardHeader>
-
-                <CardContent className="space-y-6">
-                  <ul className="space-y-4">
-                    {proFeatures.map((feature, index) => (
-                      <li key={index} className="flex items-start gap-4">
-                        <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mt-0.5">
-                          <Check className="h-4 w-4 text-green-600" />
-                        </div>
-                        <div className="flex-1">
-                          <h4 className="font-medium text-slate-800 text-sm">
-                            {feature.title}
-                          </h4>
-                          <p className="text-xs text-slate-600 mt-1">
-                            {feature.description}
-                          </p>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-
-                <CardFooter className="pt-8">
-                  <Button
-                    className="w-full h-12 text-base font-medium bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg"
-                    size="lg"
-                    onClick={onClick}
-                  >
-                    {buttonText}
-                  </Button>
-                </CardFooter>
-              </Card>
-            );
-          })}
-        </div>
-
+        <Pricing />
         {/* Feature Comparison */}
         <div className="mt-20 max-w-4xl mx-auto">
           <div className="text-center mb-12">

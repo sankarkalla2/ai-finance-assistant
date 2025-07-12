@@ -1,9 +1,6 @@
-import { Chat } from "@/components/chat";
-import { generateId, Message } from "ai";
+import LandingPageView from "@/modules/landing-page/ui/view/landing-page-view";
+
 
 export default async function Page() {
-  const id = generateId();
-
-
-  return <Chat id={id} />;
+  return <LandingPageView />;
 }

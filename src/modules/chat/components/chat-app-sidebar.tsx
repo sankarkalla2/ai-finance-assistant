@@ -1,5 +1,5 @@
 "use client";
-
+import { Slider } from "@/components/ui/slider";
 import * as React from "react";
 import {
   AudioWaveform,
@@ -20,6 +20,7 @@ import {
   Settings2,
   SidebarIcon,
   SquareTerminal,
+  UserPlus,
 } from "lucide-react";
 
 import { NavMain } from "./chat-nav-main";
@@ -142,6 +143,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </Link>
               </CardContent>
             </Card>
+          )}
+          {session && session?.data?.user && (
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip={"Onboarding"}>
+                <Link href="/onboarding">
+                  <UserPlus />
+                  Onboarding
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
           )}
 
           <SidebarMenuItem>

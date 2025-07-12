@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { getUserCurrentActiveSubscription } from "@/modules/upgrade/server/upgrade";
 import { openai } from "@ai-sdk/openai";
+import { google } from '@ai-sdk/google';
 import { generateText, Message, streamText } from "ai";
 
 // Allow streaming responses up to 30 seconds
@@ -52,11 +53,12 @@ export async function POST(req: Request) {
       });
     }
 
-    const model = !!subscription ? "gpt-4" : "gpt-3.5-turbo";
+    const model = !!subscription ? "gpt-3.5-turbo" : "gpt-3.5-turbo";
+    console.log(chat.user.prompt);
 
     // Stream response
     return streamText({
-      model: openai(model),
+      model: google('gemini-2.5-flash'),
       messages,
       system: chat.user.prompt,
       async onFinish({ text }) {
@@ -81,7 +83,8 @@ export async function POST(req: Request) {
         }
       },
     }).toDataStreamResponse();
-  } catch {
+  } catch(err) {
+    console.log(err)
     return new Response("Server error", { status: 500 });
   }
 }

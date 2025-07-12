@@ -1,7 +1,7 @@
 "use client";
 
 import { ChatRequestOptions, JSONValue, Message, UIMessage } from "ai";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { MemoizedMarkdown } from "../../../components/ui/markdown-content";
 import { AvatarProvider } from "@/components/avatar";
 
@@ -19,7 +19,7 @@ interface ChatMessagesProps {
   chatId?: string;
   addToolResult?: (params: { toolCallId: string; result: any }) => void;
   /** Ref for the scroll container */
-  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
+
   onUpdateMessage?: (messageId: string, newContent: string) => Promise<void>;
   reload?: (
     messageId: string,
@@ -37,7 +37,6 @@ export function ChatMessages({
   isLoading,
   chatId,
   addToolResult,
-  scrollContainerRef,
   onUpdateMessage,
   reload,
   messages,
@@ -46,6 +45,11 @@ export function ChatMessages({
 }: ChatMessagesProps) {
   const [openStates, setOpenStates] = useState<Record<string, boolean>>({});
   const manualToolCallId = "manual-tool-call";
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  // Get the content of the last message (for streaming updates)
+  const lastMessageContent =
+    messages.length > 0 ? messages[messages.length - 1].content : "";
 
   useEffect(() => {
     // Open manual tool call when the last section is a user message
@@ -56,6 +60,12 @@ export function ChatMessages({
       }
     }
   }, [sections]);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages.length, isLoading, lastMessageContent]);
 
   // get last tool data for manual tool call
   const lastToolData = useMemo(() => {
@@ -121,10 +131,7 @@ export function ChatMessages({
 
   return (
     <div className="relative size-full pt-14 flex-1 overflow-y-auto">
-      <div
-        className="relative mx-auto w-full max-w-3xl px-4"
-        ref={scrollContainerRef}
-      >
+      <div className="relative mx-auto w-full max-w-3xl px-4">
         {messages.map((message, idx) => (
           <div
             key={idx}
@@ -148,6 +155,7 @@ export function ChatMessages({
             </div>
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
     </div>
   );

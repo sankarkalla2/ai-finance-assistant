@@ -1,14 +1,18 @@
 "use server";
 
 import { z } from "zod";
-import { formSchema } from "../lib/onboarding-form-schema";
 import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 import { db } from "@/lib/db";
-import { generateAIAssistantPrompt } from "@/lib/utils/ai-assistant-prompt";
+import {
+  generateAIAssistantPrompt,
+  generatePreviewQuestions,
+} from "@/lib/utils/ai-assistant-prompt";
 
-export const onboardNewUser = async (data: z.infer<typeof formSchema>) => {
-  const parsedContent = formSchema.safeParse(data);
+import { headers } from "next/headers";
+import { leanFormSchema } from "../lib/onboarding-form";
+
+export const onboardNewUser = async (data: z.infer<typeof leanFormSchema>) => {
+  const parsedContent = leanFormSchema.safeParse(data);
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -32,6 +36,7 @@ export const onboardNewUser = async (data: z.infer<typeof formSchema>) => {
 
   const formData = parsedContent.data;
   const assistantPrompt = generateAIAssistantPrompt(data);
+  const previewQuestions = await generatePreviewQuestions(data);
 
   try {
     if (onboardingInfo) {
@@ -46,121 +51,63 @@ export const onboardNewUser = async (data: z.infer<typeof formSchema>) => {
             // Personal Info
             name: formData.personalInfo.name,
             age: formData.personalInfo.age,
-            gender: formData.personalInfo.gender,
-            maritalStatus: formData.personalInfo.maritalStatus,
-            location: formData.personalInfo.location,
+            country: formData.personalInfo.country,
+            state: formData.personalInfo.state,
 
             // Income
-            primaryIncome: formData.income.primaryIncome,
+            totalIncome: formData.income.monthlyIncome,
             occupation: formData.income.occupation,
-            jobType: formData.income.jobType,
-            extraIncome: formData.income.extraIncome,
             incomeFrequency: formData.income.incomeFrequency,
 
             // Assets
             cashSavings: formData.assets.cashSavings,
             investments: formData.assets.investments,
-            realEstate: formData.assets.realEstate,
-            vehicles: formData.assets.vehicles,
-            otherAssets: formData.assets.otherAssets,
-            liquidAssets: formData.assets.liquidAssets,
+            retirementSavings: formData.assets.retirementSavings,
+            realEstateVAlue: formData.assets.realEstateValue,
 
-            // Debts
-            creditCardDebt: formData.debts.creditCardDebt,
-            otherLiabilities: formData.debts.otherLiabilities,
-
-            // Mortgage
-            mortgageBalance: formData.debts.mortgage.balance,
-            mortgageInterestRate: formData.debts.mortgage.interestRate,
-            mortgageMonthlyPayment: formData.debts.mortgage.monthlyPayment,
-            mortgageYearsLeft: formData.debts.mortgage.yearsLeft,
+            //debts
+            totalDebt: formData.debts.totalDebt,
+            monthlyDebtPayment: formData.debts.monthlyDebtPayment,
+            creditScore: formData.debts.creditScore,
+            deptBreakDowns: {
+              deleteMany: {},
+              create: formData.debts.deptBreakDown.map((d) => ({
+                type: d.type,
+                totalDebt: d.totalDebt,
+                balance: d.balance,
+              })),
+            },
 
             // Expenses
             housing: formData.expenses.housing,
-            utilities: formData.expenses.utilities,
-            insurance: formData.expenses.insurance,
             food: formData.expenses.food,
             transportation: formData.expenses.transportation,
-            healthcare: formData.expenses.healthcare,
+            totalMonthlyExpenses: formData.expenses.totalMonthlyExpenses,
+            subscription: formData.expenses.subscriptions,
             education: formData.expenses.education,
-            entertainment: formData.expenses.entertainment,
-            personalCare: formData.expenses.personalCare,
-            childcare: formData.expenses.childcare,
-            miscellaneous: formData.expenses.miscellaneous,
+            miscellaneous: formData.expenses.miscallaneous,
+            
 
             // Lifestyle
             spendingHabits: formData.lifestyle.spendingHabits,
-            carType: formData.lifestyle.carPreferences.type,
-            carNewOrUsed: formData.lifestyle.carPreferences.newOrUsed,
-            carBudget: formData.lifestyle.carPreferences.budget,
-            carBrandPreference:
-              formData.lifestyle.carPreferences.brandPreference,
-            carFinancingPreference:
-              formData.lifestyle.carPreferences.financingPreference,
+            plannedPurchases: formData.lifestyle.plannedBigPurchases.map(
+              (p) => p.description
+            ),
 
-            // Additional Context
-            creditScore: formData.additionalContext.creditScore,
-            jobStability: formData.additionalContext.jobStability,
-            retirementAge: formData.additionalContext.retirementAge,
-            emergencyFundMonths: formData.additionalContext.emergencyFundMonths,
-            taxRate: formData.additionalContext.taxRate,
+            emergencyFundMonthsCovered: formData.emergencyFund.monthsCovered,
+
+            //goals
+            goals: {
+              deleteMany: {},
+              create: formData.goals.goals.map((g) => ({
+                targetAmount: g.targetAmount,
+                description: g.description,
+                priority: g.priority,
+                timeline: g.timeline,
+              })),
+            },
             riskTolerance: formData.goals.riskTolerance,
-
-            // Update related data
-            dependents: {
-              deleteMany: {},
-              create: formData.personalInfo.dependents.map((dependent) => ({
-                name: dependent.name,
-                age: dependent.age,
-                relationship: dependent.relationship,
-              })),
-            },
-            loans: {
-              deleteMany: {},
-              create: formData.debts.loans.map((loan) => ({
-                type: loan.type,
-                balance: loan.balance,
-                interestRate: loan.interestRate,
-                monthlyPayment: loan.monthlyPayment,
-                remainingTerm: loan.remainingTerm,
-              })),
-            },
-            existingEMIs: {
-              deleteMany: {},
-              create: formData.debts.existingEMIs.map((emi) => ({
-                purpose: emi.purpose,
-                amount: emi.amount,
-                duration: emi.duration,
-              })),
-            },
-            shortTermGoals: {
-              deleteMany: {},
-              create: formData.goals.shortTermGoals.map((goal) => ({
-                description: goal.description,
-                targetAmount: goal.targetAmount,
-                timeline: goal.timeline,
-                priority: goal.priority,
-                type: "short",
-              })),
-            },
-            longTermGoals: {
-              deleteMany: {},
-              create: formData.goals.longTermGoals.map((goal) => ({
-                description: goal.description,
-                targetAmount: goal.targetAmount,
-                timeline: goal.timeline,
-                priority: goal.priority,
-                type: "long",
-              })),
-            },
-            plannedPurchases: {
-              deleteMany: {},
-              create: formData.lifestyle.plannedPurchases.map((purchase) => ({
-                item: purchase.item,
-                estimatedCost: purchase.estimatedCost,
-                timeline: purchase.timeline,
-              })),
-            },
+            retirementAge: formData.goals.retirementAge,
           },
         }),
 
@@ -170,6 +117,12 @@ export const onboardNewUser = async (data: z.infer<typeof formSchema>) => {
           },
           data: {
             prompt: assistantPrompt,
+            PreviewQuestions: {
+              deleteMany: {},
+              create: previewQuestions.map((question: string) => ({
+                question,
+              })),
+            },
           },
         }),
       ]);
@@ -178,123 +131,70 @@ export const onboardNewUser = async (data: z.infer<typeof formSchema>) => {
     } else {
       // Create new user info
 
-      const [newUserinfo, _] = await db.$transaction([
+      console.log("has to create new user");
+      const [newUserinfo] = await db.$transaction([
         db.userInfo.create({
           data: {
-            userId: session.user.id,
-
             // Personal Info
+            userId: session.user.id,
             name: formData.personalInfo.name,
             age: formData.personalInfo.age,
-            gender: formData.personalInfo.gender,
-            maritalStatus: formData.personalInfo.maritalStatus,
-            location: formData.personalInfo.location,
+            country: formData.personalInfo.country,
+            state: formData.personalInfo.state,
+            maritalStatus: "unmarried",
+            dependents: formData.personalInfo.dependents,
 
             // Income
-            primaryIncome: formData.income.primaryIncome,
+            totalIncome: formData.income.monthlyIncome,
             occupation: formData.income.occupation,
-            jobType: formData.income.jobType,
-            extraIncome: formData.income.extraIncome,
             incomeFrequency: formData.income.incomeFrequency,
 
             // Assets
             cashSavings: formData.assets.cashSavings,
             investments: formData.assets.investments,
-            realEstate: formData.assets.realEstate,
-            vehicles: formData.assets.vehicles,
-            otherAssets: formData.assets.otherAssets,
-            liquidAssets: formData.assets.liquidAssets,
+            retirementSavings: formData.assets.retirementSavings,
+            realEstateVAlue: formData.assets.realEstateValue,
 
-            // Debts
-            creditCardDebt: formData.debts.creditCardDebt,
-            otherLiabilities: formData.debts.otherLiabilities,
-
-            // Mortgage
-            mortgageBalance: formData.debts.mortgage.balance,
-            mortgageInterestRate: formData.debts.mortgage.interestRate,
-            mortgageMonthlyPayment: formData.debts.mortgage.monthlyPayment,
-            mortgageYearsLeft: formData.debts.mortgage.yearsLeft,
+            //debts
+            totalDebt: formData.debts.totalDebt,
+            monthlyDebtPayment: formData.debts.monthlyDebtPayment,
+            creditScore: formData.debts.creditScore,
+            deptBreakDowns: {
+              create: formData.debts.deptBreakDown.map((d) => ({
+                type: d.type,
+                totalDebt: d.totalDebt,
+                balance: d.balance,
+              })),
+            },
 
             // Expenses
             housing: formData.expenses.housing,
-            utilities: formData.expenses.utilities,
-            insurance: formData.expenses.insurance,
             food: formData.expenses.food,
             transportation: formData.expenses.transportation,
-            healthcare: formData.expenses.healthcare,
+            totalMonthlyExpenses: formData.expenses.totalMonthlyExpenses,
+            subscription: formData.expenses.subscriptions,
             education: formData.expenses.education,
-            entertainment: formData.expenses.entertainment,
-            personalCare: formData.expenses.personalCare,
-            childcare: formData.expenses.childcare,
-            miscellaneous: formData.expenses.miscellaneous,
+            miscellaneous: formData.expenses.miscallaneous,
 
             // Lifestyle
             spendingHabits: formData.lifestyle.spendingHabits,
-            carType: formData.lifestyle.carPreferences.type,
-            carNewOrUsed: formData.lifestyle.carPreferences.newOrUsed,
-            carBudget: formData.lifestyle.carPreferences.budget,
-            carBrandPreference:
-              formData.lifestyle.carPreferences.brandPreference,
-            carFinancingPreference:
-              formData.lifestyle.carPreferences.financingPreference,
+            plannedPurchases: formData.lifestyle.plannedBigPurchases.map(
+              (p) => p.description
+            ),
 
-            // Additional Context
-            creditScore: formData.additionalContext.creditScore,
-            jobStability: formData.additionalContext.jobStability,
-            retirementAge: formData.additionalContext.retirementAge,
-            emergencyFundMonths: formData.additionalContext.emergencyFundMonths,
-            taxRate: formData.additionalContext.taxRate,
+            emergencyFundMonthsCovered: formData.emergencyFund.monthsCovered,
+
+            //goals
+            goals: {
+              create: formData.goals.goals.map((g) => ({
+                targetAmount: g.targetAmount,
+                description: g.description,
+                priority: g.priority,
+                timeline: g.timeline,
+              })),
+            },
             riskTolerance: formData.goals.riskTolerance,
-
-            // Create related data
-            dependents: {
-              create: formData.personalInfo.dependents.map((dependent) => ({
-                name: dependent.name,
-                age: dependent.age,
-                relationship: dependent.relationship,
-              })),
-            },
-            loans: {
-              create: formData.debts.loans.map((loan) => ({
-                type: loan.type,
-                balance: loan.balance,
-                interestRate: loan.interestRate,
-                monthlyPayment: loan.monthlyPayment,
-                remainingTerm: loan.remainingTerm,
-              })),
-            },
-            existingEMIs: {
-              create: formData.debts.existingEMIs.map((emi) => ({
-                purpose: emi.purpose,
-                amount: emi.amount,
-                duration: emi.duration,
-              })),
-            },
-            shortTermGoals: {
-              create: formData.goals.shortTermGoals.map((goal) => ({
-                description: goal.description,
-                targetAmount: goal.targetAmount,
-                timeline: goal.timeline,
-                priority: "low",
-                type: "short",
-              })),
-            },
-            longTermGoals: {
-              create: formData.goals.longTermGoals.map((goal) => ({
-                description: goal.description,
-                targetAmount: goal.targetAmount,
-                timeline: goal.timeline,
-                priority: goal.priority,
-                type: "long",
-              })),
-            },
-            plannedPurchases: {
-              create: formData.lifestyle.plannedPurchases.map((purchase) => ({
-                item: purchase.item,
-                estimatedCost: purchase.estimatedCost,
-                timeline: purchase.timeline,
-              })),
-            },
+            retirementAge: formData.goals.retirementAge,
           },
         }),
 
@@ -304,9 +204,16 @@ export const onboardNewUser = async (data: z.infer<typeof formSchema>) => {
           },
           data: {
             prompt: assistantPrompt,
+            PreviewQuestions: {
+              deleteMany: {},
+              create: previewQuestions.map((question) => ({
+                question,
+              })),
+            },
           },
         }),
       ]);
+      console.log("New user info created:", newUserinfo);
       return { success: true, data: newUserinfo, status: 201 };
     }
   } catch (error) {
@@ -322,12 +229,8 @@ export const getUserInfo = async (userId: string) => {
         userId,
       },
       include: {
-        dependents: true,
-        loans: true,
-        existingEMIs: true,
-        shortTermGoals: true,
-        longTermGoals: true,
-        plannedPurchases: true,
+        goals: true,
+        deptBreakDowns: true,
       },
     });
 
@@ -354,4 +257,22 @@ export const hasCompletedOnboarding = async (userId: string) => {
     console.error("Error checking onboarding status:", error);
     return { error: "Failed to check onboarding status", status: 500 };
   }
+};
+
+export const getUserPreviewQuestions = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session?.user) return { status: 400, data: [] };
+
+  const previewQuestions = await db.previewQuestions.findMany({
+    where: {
+      userId: session.user.id,
+    },
+    select: {
+      question: true,
+    },
+  });
+
+  return { status: 200, data: previewQuestions };
 };

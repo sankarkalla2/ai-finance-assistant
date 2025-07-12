@@ -24,12 +24,12 @@ export function Chat({
   id,
   savedMessages = [],
   query,
-  userImgUrl
+  userImgUrl,
 }: {
   id: string;
   savedMessages?: Message[];
-  query?: string
-  userImgUrl: string | undefined | null
+  query?: string;
+  userImgUrl: string | undefined | null;
 }) {
   const {
     messages,
@@ -65,12 +65,10 @@ export function Chat({
         isLoading={isLoading}
         chatId={id}
         addToolResult={addToolResult}
-        scrollContainerRef={scrollContainerRef}
         onUpdateMessage={handleUpdateAndReloadMessage}
         reload={handleReloadFrom}
         messages={messages}
         userImgUrl={userImgUrl}
-
       />
 
       <ChatPanel

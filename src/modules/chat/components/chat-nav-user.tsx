@@ -12,10 +12,12 @@ import {
   Monitor,
   Moon,
   Palette,
+  Settings,
   Sparkles,
   Sun,
   TriangleAlert,
   User2Icon,
+  Zap,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -60,6 +62,11 @@ import { Button } from "@/components/ui/button";
 import { deleteUserAccont } from "@/app/server/user";
 import { toast } from "sonner";
 import { useTransition } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getUserCurrentActiveSubscription } from "@/modules/upgrade/server/upgrade";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 interface NavUserProps {
   name: string;
@@ -71,6 +78,10 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
   const { setTheme } = useTheme();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const { data: currenSubscription, isLoading } = useQuery({
+    queryKey: ["get-active-user-subscription"],
+    queryFn: () => getUserCurrentActiveSubscription(),
+  });
 
   const handleDeleteAccount = async () => {
     startTransition(async () => {
@@ -187,7 +198,7 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
                                   Deleting...
                                 </div>
                               ) : (
-                                "Delete"  
+                                "Delete"
                               )}
                             </Button>
                           </AlertDialogTrigger>
@@ -222,9 +233,80 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
                 {/* <BadgeCheck />
                 Account */}
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
+              <DropdownMenuItem asChild>
+                <ModalProvider
+                  title="Billing"
+                  description="Manage billing"
+                  trigger={
+                    <div className="flex items-center gap-2 rounded-md cursor-pointer hover:bg-sidebar-accent px-2 py-2 text-sm">
+                      <CreditCard className="size-4 text-muted-foreground" />
+                      Billing
+                    </div>
+                  }
+                >
+                  <div>
+                    <div>
+                      {isLoading ? (
+                        <div className="flex items-center justify-center">
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        </div>
+                      ) : (
+                        <Alert>
+                          <AlertTitle>
+                            <div className="flex items-center gap-2">
+                              <CreditCard /> Subscription Status
+                            </div>
+                          </AlertTitle>
+                          <AlertDescription className="w-full mt-5">
+                            <div className="flex items-center justify-between w-full">
+                              <div>
+                                <p className="text-sm text-muted-foreground">
+                                  Current Plan
+                                </p>
+                                <p className="text-lg font-semibold flex items-center gap-2">
+                                  {currenSubscription ? "Pro" : "Free"}
+                                  {currenSubscription && (
+                                    <Badge
+                                      variant="secondary"
+                                      className="bg-primary/10 text-primary"
+                                    >
+                                      Active
+                                    </Badge>
+                                  )}
+                                  {!currenSubscription && (
+                                    <Badge variant="outline">
+                                      No Subscription
+                                    </Badge>
+                                  )}
+                                </p>
+                              </div>
+
+                              {!currenSubscription && (
+                                <Button className="bg-primary hover:bg-primary/90">
+                                  <Link href="/pricing">
+                                    <Zap className="mr-2 h-4 w-4" />
+                                    View Pricing
+                                  </Link>
+                                </Button>
+                              )}
+                              {currenSubscription && (
+                                <Button
+                                  className="bg-primary hover:bg-primary/90"
+                                  onClick={() => authClient.customer.portal()}
+                                >
+                                  <>
+                                    <Settings className="mr-2 h-4 w-4" />
+                                    Manage Billing
+                                  </>
+                                </Button>
+                              )}
+                            </div>
+                          </AlertDescription>
+                        </Alert>
+                      )}
+                    </div>
+                  </div>
+                </ModalProvider>
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={async () =>

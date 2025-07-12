@@ -228,7 +228,6 @@ export function Chat({
         isLoading={isLoading}
         chatId={id}
         addToolResult={addToolResult}
-        scrollContainerRef={scrollContainerRef}
         onUpdateMessage={handleUpdateAndReloadMessage}
         reload={handleReloadFrom}
         messages={messages}

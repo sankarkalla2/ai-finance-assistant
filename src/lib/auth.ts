@@ -29,12 +29,13 @@ export const auth = betterAuth({
     polar({
       client: polarClient,
       createCustomerOnSignUp: true,
+      
       use: [
         checkout({
           successUrl: "/upgrade",
           authenticatedUsersOnly: true,
         }),
-        portal(),
+        portal()
       ],
     }),
   ],

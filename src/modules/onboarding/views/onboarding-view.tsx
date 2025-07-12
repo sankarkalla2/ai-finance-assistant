@@ -72,13 +72,13 @@ const MultiStepForm = ({ userInfo }: OnboardedUserType) => {
         age: userInfo?.age ?? 0,
         gender: userInfo?.gender ?? "prefer-not-to-say",
         maritalStatus: userInfo?.maritalStatus ?? "single",
-        dependents: userInfo?.dependents ?? [],
-        location: userInfo?.location ?? "",
+        dependents: 0,
+        country: "India",
+        state: "Andhra Pradesh",
       },
       income: {
         primaryIncome: userInfo?.primaryIncome ?? 0,
         occupation: userInfo?.occupation ?? "",
-        jobType: userInfo?.jobType ?? "",
         extraIncome: userInfo?.extraIncome ?? 0,
         incomeFrequency: userInfo?.incomeFrequency ?? "",
       },
@@ -179,8 +179,8 @@ const MultiStepForm = ({ userInfo }: OnboardedUserType) => {
     setIsSubmitting(true);
     try {
       console.log("Form Data:", data);
-      const res = await onboardNewUser(data);
-      console.log(res);
+      // const res = await onboardNewUser(data);
+      // console.log(res);
 
       toast.success("Your financial profile has been created successfully!");
       router.push("/chat");
@@ -216,7 +216,9 @@ const MultiStepForm = ({ userInfo }: OnboardedUserType) => {
     switch (currentStep) {
       case 0:
         return (
-          data.personalInfo.name.trim() !== "" && data.personalInfo.age > 0
+          data.personalInfo.name.trim() !== "" &&
+          data.personalInfo.age > 0 &&
+          data.personalInfo.country.trim() !== ""
         );
       case 1:
         return (
@@ -240,7 +242,7 @@ const MultiStepForm = ({ userInfo }: OnboardedUserType) => {
   const StepComponent = steps[currentStep].component;
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-8 px-4">
+    <div className="w-full max-w-lg mx-auto py-8 px-4">
       {/* Progress indicator */}
       <motion.div
         className="mb-8"

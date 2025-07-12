@@ -24,6 +24,7 @@ export const getUserCurrentActiveSubscription = async() => {
         headers: await headers()
     })
     if(!session?.user) return null;
+    
 
     const customer = await polarClient.customers.getStateExternal({
         externalId: session?.user.id
