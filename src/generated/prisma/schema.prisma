@@ -1,0 +1,238 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String             @id
+  name             String
+  email            String
+  emailVerified    Boolean
+  image            String
+  createdAt        DateTime
+  updatedAt        DateTime
+  lastReset        DateTime           @default(now())
+  reqCount         Int                @default(0)
+  sessions         Session[]
+  accounts         Account[]
+  UserInfo         UserInfo?
+  prompt           String             @default("") @db.Text
+  Chat             Chat[]
+  Feedback         Feedback[]
+  PreviewQuestions PreviewQuestions[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
+}
+
+enum IncomeFrequency {
+  monthly
+  weekly
+  yearly
+}
+
+model UserInfo {
+  id     String @id @unique @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Personal Info
+  name          String
+  age           Int
+  country       String
+  state         String?
+  maritalStatus String
+  dependents    Int
+
+  // Income
+  totalIncome     Float
+  occupation      String
+  incomeFrequency IncomeFrequency
+  jobStability    JobStability    @default(stable)
+
+  // Assets
+  cashSavings       Float
+  investments       Float
+  retirementSavings Float
+  realEstateVAlue   Float
+
+  // Debts
+  totalDebt          Float
+  monthlyDebtPayment Float
+  creditScore        Float           @default(0)
+  deptBreakDowns     DeptBreakDown[]
+
+  //expenses
+  totalMonthlyExpenses Float
+  housing              Float @default(0)
+  transportation       Float @default(0)
+  food                 Float @default(0)
+  subscription         Float @default(0)
+  miscellaneous        Float @default(0)
+  education            Float @default(0)
+  mismiscallaneous     Float @default(0)
+
+  //goals
+  goals         Goal[]
+  riskTolerance riskTolerance @default(medium)
+  retirementAge Int           @default(55)
+
+  //emegercy fund
+  emergencyFundMonthsCovered Int
+
+  //lifestyle 
+  spendingHabits   SpendingHabits
+  plannedPurchases String[]
+
+  @@map("user_info")
+}
+
+enum JobStability {
+  stable
+  contract
+  freelance
+  seasonal
+}
+
+model DeptBreakDown {
+  id         String           @id @default(uuid())
+  userInfoId String
+  userinfo   UserInfo         @relation(fields: [userInfoId], references: [id], onDelete: Cascade)
+  type       Credit_Card_Type
+  totalDebt  Int              @default(0)
+  balance    Int              @default(0)
+}
+
+enum Credit_Card_Type {
+  credit_card
+  mortgage
+  student_loan
+  car_loan
+  personal_loan
+  other
+}
+
+enum riskTolerance {
+  low
+  medium
+  high
+}
+
+enum SpendingHabits {
+  conservative
+  average
+  liberal
+}
+
+model PreviewQuestions {
+  id       String @id @unique @default(uuid())
+  question String
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Goal {
+  id           String       @id @default(uuid())
+  description  String
+  targetAmount Float
+  timeline     String
+  priority     GoalPriority
+  userInfoId   String
+  goal         UserInfo     @relation(fields: [userInfoId], references: [id], onDelete: Cascade)
+}
+
+enum GoalPriority {
+  low
+  medium
+  high
+}
+
+model Chat {
+  id        String    @id
+  messages  Message[]
+  title     String    @default("new chat")
+  createdAt DateTime  @default(now())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  role      Role
+  createdAt DateTime @default(now())
+  content   String
+  chatid    String
+  chat      Chat     @relation(references: [id], fields: [chatid], onDelete: Cascade)
+}
+
+enum Role {
+  user
+  system
+  data
+  assistant
+}
+
+model Feedback {
+  id        String   @id @default(uuid())
+  feedback  String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reaction  Int
+  createdAt DateTime @default(now())
+}
