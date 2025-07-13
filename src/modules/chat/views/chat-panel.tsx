@@ -9,8 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import Textarea from "react-textarea-autosize";
 // import { useArtifact } from "./artifact/artifact-context";
 import { EmptyScreen } from "../../../components/empty-screen";
-// import { ModelSelector } from "./model-selector";
-import { SearchModeToggle } from "../../../components/search-mode-toggle";
+
 import { Button } from "../../../components/ui/button";
 import { IconLogo } from "../../../components/ui/icons";
 
