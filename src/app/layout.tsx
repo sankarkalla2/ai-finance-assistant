@@ -21,6 +21,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          defer
+          data-website-id="68739bab3d927f1bd3dd1a63"
+          data-domain="askyourfinance.site"
+          src="https://datafa.st/js/script.js"
+        ></script>
+      </head>
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider
           attribute="class"
