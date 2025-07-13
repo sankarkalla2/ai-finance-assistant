@@ -20,9 +20,9 @@ const ChatId = async ({ params }: ChatIdProps) => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  // if (!session?.user) {
-  //   return redirect("/sign-in");
-  // }
+  if (!session?.user) {
+    return redirect("/sign-in");
+  }
   return (
     <Chat
       id={chatid}
