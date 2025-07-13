@@ -55,9 +55,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getUserCurrentActiveSubscription } from "@/modules/upgrade/server/upgrade";
-import ModalProvider from "@/components/modal-provider";
 import UserFeedback from "./user-feedback";
-import { RainbowButton } from "@/components/magicui/rainbow-button";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const session = authClient.useSession();
