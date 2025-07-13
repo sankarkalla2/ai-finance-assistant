@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, CirclePlay } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -30,7 +31,14 @@ const Hero = () => {
           No credit card required. Cancel anytime.
         </p>
       </div>
-      <div className="w-full max-w-screen-xl mx-auto aspect-video bg-accent rounded-xl" />
+      <div className="w-full relative max-w-screen-xl mx-auto aspect-video bg-accent rounded-xl">
+        <Image
+          src={"/light-theme.png"}
+          fill
+          alt="logo"
+          className="aspect-video rounded-md"
+        />
+      </div>
     </div>
   );
 };
