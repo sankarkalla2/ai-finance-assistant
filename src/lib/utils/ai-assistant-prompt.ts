@@ -9,8 +9,16 @@ import { z } from "zod";
 export function generateAIAssistantPrompt(
   userData: z.infer<typeof leanFormSchema>
 ): string {
-  const { personalInfo, income, assets, debts, expenses, goals, lifestyle } =
-    userData;
+  const {
+    personalInfo,
+    income,
+    assets,
+    debts,
+    expenses,
+    goals,
+    lifestyle,
+    emergencyFund,
+  } = userData;
 
   const currencySybmbol =
     Countries.find((country) => country.name === personalInfo.country)
@@ -134,11 +142,7 @@ ${
       ? ((debts.totalDebt / (income.monthlyIncome * 12)) * 100).toFixed(1)
       : "N/A"
   }%
-- Emergency Fund Coverage: ${
-    assets.cashSavings && expenses.totalMonthlyExpenses
-      ? (assets.cashSavings / expenses.totalMonthlyExpenses).toFixed(1)
-      : "N/A"
-  } months
+- Emergency Fund Coverage: ${emergencyFund.monthsCovered} months covered.
 
 ## YOUR ROLE & RESPONSIBILITIES
 
