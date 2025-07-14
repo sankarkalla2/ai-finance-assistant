@@ -1,5 +1,12 @@
+import { Metadata } from "next";
 import Head from "next/head";
 
+export const metadata: Metadata = {
+  title: {
+    absolute: "Terms of Service ",
+  },
+  description: "Terms of Service for AskYourFinance",
+};
 export default function TermsOfService() {
   return (
     <>

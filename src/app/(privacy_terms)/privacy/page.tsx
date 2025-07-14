@@ -1,6 +1,13 @@
 import React from "react";
 import Head from "next/head";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: {
+    absolute: "Privacy Policy ",
+  },
+  description: "Privacy Policy for AskYourFinance",
+};
 export default function PrivacyPolicy() {
   return (
     <>
