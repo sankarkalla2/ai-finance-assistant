@@ -5,6 +5,12 @@ import { getUserInfo } from "@/modules/onboarding/server/onboarding-user";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  title: {
+    absolute: "Onboarding-AskYourFinance",
+  },
+  description: "Onboarding for AskYourFinance",
+};
 const onboarding = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),

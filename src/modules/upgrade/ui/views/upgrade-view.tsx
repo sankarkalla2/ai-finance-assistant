@@ -5,35 +5,18 @@ import {
   getAllSubscriptions,
   getUserCurrentActiveSubscription,
 } from "../../server/upgrade";
+
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import {
-  Check,
-  Crown,
-  Sparkles,
   Calculator,
   TrendingUp,
   Shield,
   Mail,
   RefreshCw,
-  Target,
   Brain,
   Zap,
   Users,
   BarChart3,
-  PiggyBank,
-  AlertTriangle,
-  Wallet,
 } from "lucide-react";
-import { authClient } from "@/lib/auth-client";
 import Pricing from "@/modules/landing-page/ui/components/pricing";
 
 const UpgradeView = () => {
@@ -68,92 +51,6 @@ const UpgradeView = () => {
     );
   }
 
-  const freeFeatures = [
-    {
-      icon: <Calculator className="h-4 w-4" />,
-      title: "Financial Data Entry",
-      description:
-        "Full financial data entry—track all your income, expenses, debts, and savings",
-    },
-    {
-      icon: <Brain className="h-4 w-4" />,
-      title: "5 AI Questions per Month",
-      description: "Limited Q&A responses powered by GPT-3.5 Turbo",
-    },
-    {
-      icon: <BarChart3 className="h-4 w-4" />,
-      title: "Static Financial Overview",
-      description: "Basic pie chart visualization and general budgeting tips",
-    },
-    {
-      icon: <Shield className="h-4 w-4" />,
-      title: "Secure Data Storage",
-      description:
-        "Bank-level encryption with option to delete your data anytime",
-    },
-    {
-      icon: <Mail className="h-4 w-4" />,
-      title: "Email Support",
-      description: "Standard email support within 48-72 hours",
-    },
-  ];
-
-  const proFeatures = [
-    {
-      icon: <Calculator className="h-4 w-4" />,
-      title: "Financial Data Entry",
-      description:
-        "Full financial data entry—track all your income, expenses, debts, and savings",
-    },
-    {
-      icon: <Zap className="h-4 w-4" />,
-      title: "Unlimited AI Conversations",
-      description:
-        "Unlimited questions with GPT-4o for comprehensive financial guidance",
-    },
-    {
-      icon: <TrendingUp className="h-4 w-4" />,
-      title: "Advanced Analytics & Insights",
-      description:
-        "Dynamic charts, spending patterns, investment recommendations, and cash flow analysis",
-    },
-    // {
-    //   icon: <Target className="h-4 w-4" />,
-    //   title: "Personalized Financial Goals",
-    //   description: "Custom goal tracking for retirement, emergency funds, debt payoff, and major purchases"
-    // },
-    // {
-    //   icon: <RefreshCw className="h-4 w-4" />,
-    //   title: "Real-time Data Updates",
-    //   description: "Update your financial profile anytime with instant recalculations and new recommendations"
-    // },
-    // {
-    //   icon: <AlertTriangle className="h-4 w-4" />,
-    //   title: "Financial Risk Assessment",
-    //   description: "Identify potential financial risks and get proactive advice to avoid common pitfalls"
-    // },
-    // {
-    //   icon: <PiggyBank className="h-4 w-4" />,
-    //   title: "Tax Optimization Strategies",
-    //   description: "AI-powered suggestions for tax-efficient investing and deduction opportunities"
-    // },
-    // {
-    //   icon: <Wallet className="h-4 w-4" />,
-    //   title: "Debt Payoff Optimization",
-    //   description: "Smart strategies comparing avalanche vs. snowball methods with projected timelines"
-    // },
-    {
-      icon: <Shield className="h-4 w-4" />,
-      title: "Secure Data Storage",
-      description:
-        "Bank-level encryption with option to delete your data anytime",
-    },
-    {
-      icon: <Users className="h-4 w-4" />,
-      title: "Priority Support",
-      description: "Priority email support with 12-hour response time",
-    },
-  ];
 
   return (
     <div className="min-h-screen">

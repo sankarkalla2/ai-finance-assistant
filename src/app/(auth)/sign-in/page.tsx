@@ -2,7 +2,14 @@ import SignInview from "@/modules/sign-in/views/sign-in-view";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: {
+    absolute: "Sign In-AskYourFinance",
+  },
+  description: "Sign In for AskYourFinance",
+};
 export default async function SignIn() {
   const session = await auth.api.getSession({
     headers: await headers(),

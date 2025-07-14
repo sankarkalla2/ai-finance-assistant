@@ -7,9 +7,16 @@ import {
   QueryClient,
   usePrefetchQuery,
 } from "@tanstack/react-query";
+import { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+export const metadata: Metadata = {
+  title: {
+    absolute: "Upgrade-AskYourFinance", 
+  },
+  description: "Upgrade for AskYourFinance",
+};
 const Upgrade = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
