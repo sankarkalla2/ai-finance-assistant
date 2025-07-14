@@ -145,7 +145,7 @@ export function ChatMessages({
                 />
               ) : (
                 <AvatarProvider
-                  imgUrl="https://github.com/evilrabbit.png"
+                  imgUrl="/logo.png"
                   fallbackName="AI"
                 />
               )}

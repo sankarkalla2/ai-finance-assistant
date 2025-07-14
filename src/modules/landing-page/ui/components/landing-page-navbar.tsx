@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Logo } from "./landing-page-logo";
 import { NavMenu } from "./nav-menu";
 import { NavigationSheet } from "./navigation-sheet";
 import Hero from "./hero";
@@ -12,6 +11,8 @@ import { cn } from "@/lib/utils";
 import { MoonIcon, SunMediumIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import Image from "next/image";
+import { Logo } from "@/components/logo";
 // Replace the `Switch` component in `@components/ui/switch` with below component and use it here to support this customization.
 const Switch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,

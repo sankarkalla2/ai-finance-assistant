@@ -74,7 +74,7 @@ export async function POST(req: Request) {
               { role: "assistant", content: text, chatid: id },
             ],
           });
-          if (subscription) {
+          if (!subscription) {
             await db.user.update({
               where: { id: session.user.id },
               data: { reqCount: { increment: 1 } },

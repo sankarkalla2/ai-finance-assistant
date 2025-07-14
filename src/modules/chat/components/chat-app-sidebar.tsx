@@ -56,6 +56,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { getUserCurrentActiveSubscription } from "@/modules/upgrade/server/upgrade";
 import UserFeedback from "./user-feedback";
+import { Logo } from "@/components/logo";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const session = authClient.useSession();
@@ -78,12 +79,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <div className="w-full">
-                <a href="#" className="flex items-center gap-x-2">
-                  <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-5 items-center justify-center rounded-lg">
+                <a href="/" className="flex items-center gap-x-2">
+                  {/* <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-5 items-center justify-center rounded-lg">
                     <CommandIcon className="size-4" />
-                  </div>
+                  </div> */}
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">Acme Inc</span>
+                    <Logo variant="sm" />
                   </div>
                 </a>
                 <SidebarIcon className="ml-auto" onClick={toggleSidebar} />

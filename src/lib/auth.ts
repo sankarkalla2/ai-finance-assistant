@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
+import { magicLink } from "better-auth/plugins";
 import {
   polar,
   checkout,
@@ -9,7 +10,6 @@ import {
 } from "@polar-sh/better-auth";
 import { db } from "./db";
 import { polarClient } from "./utils/polar-client";
-
 
 export const auth = betterAuth({
   database: prismaAdapter(db, {
@@ -26,16 +26,21 @@ export const auth = betterAuth({
     },
   },
   plugins: [
+    magicLink({
+      sendMagicLink: async (data, request) => {
+        console.log(data);
+      },
+    }),
     polar({
       client: polarClient,
       createCustomerOnSignUp: true,
-      
+
       use: [
         checkout({
           successUrl: "/upgrade",
           authenticatedUsersOnly: true,
         }),
-        portal()
+        portal(),
       ],
     }),
   ],

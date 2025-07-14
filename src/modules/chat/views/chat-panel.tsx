@@ -12,6 +12,8 @@ import { EmptyScreen } from "../../../components/empty-screen";
 
 import { Button } from "../../../components/ui/button";
 import { IconLogo } from "../../../components/ui/icons";
+import { Logo } from "@/components/logo";
+import Image from "next/image";
 
 interface ChatPanelProps {
   input: string;
@@ -115,7 +117,7 @@ export function ChatPanel({
     >
       {messages.length === 0 && (
         <div className="mb-10 flex flex-col items-center gap-4">
-          <IconLogo className="size-12 text-muted-foreground" />
+          <Image src="/logo.png" height={50} width={50} alt="Logo" />
           <p className="text-center text-3xl font-semibold">
             How can I help you today?
           </p>

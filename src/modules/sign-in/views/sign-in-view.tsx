@@ -14,15 +14,20 @@ import { useState } from "react";
 import { signIn } from "@/lib/auth-client";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 export default function SignIn() {
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+
   const handleSignInSocials = async (provider: "google" | "apple") => {
     await signIn.social(
       {
         provider: provider,
-        callbackURL: "/",
+        callbackURL: "/chat",
         newUserCallbackURL: "/onboarding",
       },
       {
@@ -55,6 +60,54 @@ export default function SignIn() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+                required
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                value={email}
+              />
+              <Button
+                disabled={loading}
+                className="gap-2"
+                onClick={async () => {
+                  await signIn.magicLink(
+                    {
+                      email,
+                      callbackURL: "/chat",
+                    },
+                    {
+                      onRequest: (ctx) => {
+                        setLoading(true);
+                      },
+                      onResponse: (ctx) => {
+                        setLoading(false);
+                        if (ctx.response.status === 200) {
+                          toast.success(
+                            "Magic link sent to you mail successfully."
+                          );
+                        }
+                      },
+                      onError: (ctx) => {
+                        setLoading(false);
+                        toast.error(ctx.error.message);
+                      },
+                    }
+                  );
+                }}
+              >
+                {loading ? (
+                  <Loader2 size={16} className="animate-spin" />
+                ) : (
+                  "Sign-in with Magic Link"
+                )}
+              </Button>
+            </div>
             <div
               className={cn(
                 "w-full gap-2 flex items-center",
