@@ -57,8 +57,10 @@ import { Button } from "@/components/ui/button";
 import { getUserCurrentActiveSubscription } from "@/modules/upgrade/server/upgrade";
 import UserFeedback from "./user-feedback";
 import { Logo } from "@/components/logo";
+import { usePathname } from "next/navigation";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
   const session = authClient.useSession();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["get-history"],
@@ -145,7 +147,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           )}
           {session && session?.data?.user && (
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip={"Onboarding"}>
+              <SidebarMenuButton asChild tooltip={"Onboarding"} isActive={pathname === "/onboarding"}>
                 <Link href="/onboarding">
                   <UserPlus />
                   Onboarding

@@ -10,8 +10,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -19,7 +20,7 @@ model User {
   name             String
   email            String
   emailVerified    Boolean
-  image            String
+  image            String?
   createdAt        DateTime
   updatedAt        DateTime
   lastReset        DateTime           @default(now())
@@ -101,7 +102,8 @@ model UserInfo {
   dependents    Int
 
   // Income
-  totalIncome     Float
+  monthlyIncome   Float
+  extraIncome     Float
   occupation      String
   incomeFrequency IncomeFrequency
   jobStability    JobStability    @default(stable)
@@ -151,12 +153,12 @@ enum JobStability {
 }
 
 model DeptBreakDown {
-  id         String           @id @default(uuid())
-  userInfoId String
-  userinfo   UserInfo         @relation(fields: [userInfoId], references: [id], onDelete: Cascade)
-  type       Credit_Card_Type
-  totalDebt  Int              @default(0)
-  balance    Int              @default(0)
+  id             String           @id @default(uuid())
+  userInfoId     String
+  userinfo       UserInfo         @relation(fields: [userInfoId], references: [id], onDelete: Cascade)
+  type           Credit_Card_Type
+  monthlyPayment Int              @default(0)
+  balance        Int              @default(0)
 }
 
 enum Credit_Card_Type {

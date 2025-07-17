@@ -26,8 +26,8 @@ export const useOnboarduser = (userInfo: OnboardedUserType) => {
         dependents: userInfo?.userInfo?.dependents || 0,
       },
       income: {
-        monthlyIncome: userInfo?.userInfo?.totalIncome || 0,
-        extraIncome: 0,
+        monthlyIncome: userInfo?.userInfo?.monthlyIncome || 0,
+        extraIncome: userInfo?.userInfo?.extraIncome || 0,
         occupation: userInfo?.userInfo?.occupation || "",
         incomeFrequency: userInfo?.userInfo?.incomeFrequency || "monthly",
         jobStability: userInfo?.userInfo?.jobStability || "stable",
@@ -228,6 +228,5 @@ export const useOnboarduser = (userInfo: OnboardedUserType) => {
     steps,
     methods,
     isSubmitting,
-    
   };
 };

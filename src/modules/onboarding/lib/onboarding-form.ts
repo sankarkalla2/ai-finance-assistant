@@ -52,7 +52,7 @@ export const leanFormSchema = z.object({
           "personal_loan",
           "other",
         ]),
-        totalDebt: z.number().min(0, "Amount cannot be negative"),
+        monthlyPayment: z.number().min(0, "Amount cannot be negative"),
         balance: z.number().min(0, "Balance cannot be negative"),
       })
     ),

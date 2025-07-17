@@ -713,7 +713,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                               onClick={() =>
                                 appendDebt({
                                   type: "credit_card",
-                                  totalDebt: 0,
+                                  monthlyPayment: 0,
                                   balance: 0,
                                 })
                               }
@@ -778,7 +778,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                                   )}
                                 />
                                 <Controller
-                                  name={`debts.deptBreakDown.${index}.totalDebt`} // Corrected path
+                                  name={`debts.deptBreakDown.${index}.monthlyPayment`} // Corrected path
                                   control={control}
                                   rules={{
                                     min: 0,
@@ -793,8 +793,10 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                                       <Input
                                         {...field}
                                         type="number"
-                                        placeholder="Amount"
-                                        aria-label={`Debt ${index + 1} Amount`}
+                                        placeholder="monthlyDebtPayment"
+                                        aria-label={`Debt ${
+                                          index + 1
+                                        } monthlyPayment`}
                                         onChange={(e) =>
                                           field.onChange(
                                             Number.parseFloat(e.target.value) ||

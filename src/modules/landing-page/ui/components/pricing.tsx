@@ -120,6 +120,7 @@ const useAuthButtons = (
     products?.map((product) => {
       const hasActiveSubscription = !!currentSubscription;
 
+      console.log(products, "products");
       return {
         interval: product.recurringInterval,
         id: product.id,
@@ -298,6 +299,7 @@ const Pricing = () => {
     useState<BillingPeriod>("year");
 
   const { products, currentSubscription, isLoading } = usePricingData();
+  console.log(products);
   const authButtons = useAuthButtons(products || [], currentSubscription);
 
   const isAuthenticated = !!session.data?.user;

@@ -53,12 +53,12 @@ export async function POST(req: Request) {
       });
     }
 
-    const model = !!subscription ? "gpt-3.5-turbo" : "gpt-3.5-turbo";
+    // const model = !!subscription ? "gpt-3.5-turbo" : "gpt-3.5-turbo";
     console.log(chat.user.prompt);
 
     // Stream response
     return streamText({
-      model: google('gemini-2.5-flash'),
+      model:  openai('gpt-4.1'),
       messages,
       system: chat.user.prompt,
       async onFinish({ text }) {

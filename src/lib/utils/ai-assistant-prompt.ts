@@ -98,8 +98,8 @@ ${
     ? debts.deptBreakDown
         .map(
           (debt) =>
-            `- ${debt.type}: Total ${currencySybmbol}${
-              debt.totalDebt?.toLocaleString() || "0"
+            `- ${debt.type}: Monthly payment ${currencySybmbol}${
+              debt.monthlyPayment?.toLocaleString() || "0"
             } | Remaining Balance: ${currencySybmbol}${
               debt.balance?.toLocaleString() || "0"
             }`
@@ -326,7 +326,7 @@ export const generatePreviewQuestions = async (
   `;
 
   const response = await generateObject({
-    model: google("gemini-2.5-flash"),
+    model: openai("gpt-4.1-nano"),
     prompt,
     schema: z.object({
       questions: z.array(z.string()),

@@ -11,13 +11,14 @@ import {
 } from "@/components/ui/card";
 
 import { useState } from "react";
-import { signIn } from "@/lib/auth-client";
+import { authClient, signIn } from "@/lib/auth-client";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { isUserExisted } from "@/app/server/user";
 
 export default function SignIn() {
   const [loading, setLoading] = useState(false);
@@ -76,10 +77,14 @@ export default function SignIn() {
                 disabled={loading}
                 className="gap-2"
                 onClick={async () => {
-                  await signIn.magicLink(
+                  const isUser = await isUserExisted(email);
+                  await authClient.signIn.magicLink(
                     {
                       email,
-                      callbackURL: "/chat",
+                      name: "User",
+                      callbackURL: isUser.isUserExisted
+                        ? "/chat"
+                        : "/onboarding",
                     },
                     {
                       onRequest: (ctx) => {

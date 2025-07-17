@@ -55,7 +55,8 @@ export const onboardNewUser = async (data: z.infer<typeof leanFormSchema>) => {
             state: formData.personalInfo.state,
 
             // Income
-            totalIncome: formData.income.monthlyIncome,
+            monthlyIncome: formData.income.monthlyIncome,
+            extraIncome: formData.income.extraIncome,
             occupation: formData.income.occupation,
             incomeFrequency: formData.income.incomeFrequency,
 
@@ -73,7 +74,7 @@ export const onboardNewUser = async (data: z.infer<typeof leanFormSchema>) => {
               deleteMany: {},
               create: formData.debts.deptBreakDown.map((d) => ({
                 type: d.type,
-                totalDebt: d.totalDebt,
+                monthlyPayment: d.monthlyPayment,
                 balance: d.balance,
               })),
             },
@@ -86,7 +87,6 @@ export const onboardNewUser = async (data: z.infer<typeof leanFormSchema>) => {
             subscription: formData.expenses.subscriptions,
             education: formData.expenses.education,
             miscellaneous: formData.expenses.miscallaneous,
-            
 
             // Lifestyle
             spendingHabits: formData.lifestyle.spendingHabits,
@@ -145,7 +145,8 @@ export const onboardNewUser = async (data: z.infer<typeof leanFormSchema>) => {
             dependents: formData.personalInfo.dependents,
 
             // Income
-            totalIncome: formData.income.monthlyIncome,
+            monthlyIncome: formData.income.monthlyIncome,
+            extraIncome: formData.income.extraIncome,
             occupation: formData.income.occupation,
             incomeFrequency: formData.income.incomeFrequency,
 
@@ -162,7 +163,7 @@ export const onboardNewUser = async (data: z.infer<typeof leanFormSchema>) => {
             deptBreakDowns: {
               create: formData.debts.deptBreakDown.map((d) => ({
                 type: d.type,
-                totalDebt: d.totalDebt,
+                monthlyPayment: d.monthlyPayment,
                 balance: d.balance,
               })),
             },

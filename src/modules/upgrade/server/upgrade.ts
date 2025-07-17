@@ -10,27 +10,24 @@ export const getAllSubscriptions = async () => {
   const products = await polarClient.products.list({
     isArchived: false,
     isRecurring: true,
-    sorting: ['price_amount']
+    sorting: ["price_amount"],
   });
 
-  console.log(products)
+  console.log(products);
 
   return products.result.items;
 };
 
+export const getUserCurrentActiveSubscription = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session?.user) return null;
 
-export const getUserCurrentActiveSubscription = async() => {
-    const session = await auth.api.getSession({
-        headers: await headers()
-    })
-    if(!session?.user) return null;
-    
+  const customer = await polarClient.customers.getStateExternal({
+    externalId: session?.user.id,
+  });
 
-    const customer = await polarClient.customers.getStateExternal({
-        externalId: session?.user.id
-    })
-
-    const product = customer.activeSubscriptions[0];
-    return product ?? null;
-    
-}
+  const product = customer.activeSubscriptions[0];
+  return product ?? null;
+};

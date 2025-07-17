@@ -2217,7 +2217,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image: string | null
     createdAt: Date
     updatedAt: Date
     lastReset: Date
@@ -2331,7 +2331,7 @@ export namespace Prisma {
       name: string
       email: string
       emailVerified: boolean
-      image: string
+      image: string | null
       createdAt: Date
       updatedAt: Date
       lastReset: Date
@@ -6603,7 +6603,8 @@ export namespace Prisma {
   export type UserInfoAvgAggregateOutputType = {
     age: number | null
     dependents: number | null
-    totalIncome: number | null
+    monthlyIncome: number | null
+    extraIncome: number | null
     cashSavings: number | null
     investments: number | null
     retirementSavings: number | null
@@ -6626,7 +6627,8 @@ export namespace Prisma {
   export type UserInfoSumAggregateOutputType = {
     age: number | null
     dependents: number | null
-    totalIncome: number | null
+    monthlyIncome: number | null
+    extraIncome: number | null
     cashSavings: number | null
     investments: number | null
     retirementSavings: number | null
@@ -6655,7 +6657,8 @@ export namespace Prisma {
     state: string | null
     maritalStatus: string | null
     dependents: number | null
-    totalIncome: number | null
+    monthlyIncome: number | null
+    extraIncome: number | null
     occupation: string | null
     incomeFrequency: $Enums.IncomeFrequency | null
     jobStability: $Enums.JobStability | null
@@ -6689,7 +6692,8 @@ export namespace Prisma {
     state: string | null
     maritalStatus: string | null
     dependents: number | null
-    totalIncome: number | null
+    monthlyIncome: number | null
+    extraIncome: number | null
     occupation: string | null
     incomeFrequency: $Enums.IncomeFrequency | null
     jobStability: $Enums.JobStability | null
@@ -6723,7 +6727,8 @@ export namespace Prisma {
     state: number
     maritalStatus: number
     dependents: number
-    totalIncome: number
+    monthlyIncome: number
+    extraIncome: number
     occupation: number
     incomeFrequency: number
     jobStability: number
@@ -6754,7 +6759,8 @@ export namespace Prisma {
   export type UserInfoAvgAggregateInputType = {
     age?: true
     dependents?: true
-    totalIncome?: true
+    monthlyIncome?: true
+    extraIncome?: true
     cashSavings?: true
     investments?: true
     retirementSavings?: true
@@ -6777,7 +6783,8 @@ export namespace Prisma {
   export type UserInfoSumAggregateInputType = {
     age?: true
     dependents?: true
-    totalIncome?: true
+    monthlyIncome?: true
+    extraIncome?: true
     cashSavings?: true
     investments?: true
     retirementSavings?: true
@@ -6806,7 +6813,8 @@ export namespace Prisma {
     state?: true
     maritalStatus?: true
     dependents?: true
-    totalIncome?: true
+    monthlyIncome?: true
+    extraIncome?: true
     occupation?: true
     incomeFrequency?: true
     jobStability?: true
@@ -6840,7 +6848,8 @@ export namespace Prisma {
     state?: true
     maritalStatus?: true
     dependents?: true
-    totalIncome?: true
+    monthlyIncome?: true
+    extraIncome?: true
     occupation?: true
     incomeFrequency?: true
     jobStability?: true
@@ -6874,7 +6883,8 @@ export namespace Prisma {
     state?: true
     maritalStatus?: true
     dependents?: true
-    totalIncome?: true
+    monthlyIncome?: true
+    extraIncome?: true
     occupation?: true
     incomeFrequency?: true
     jobStability?: true
@@ -6996,7 +7006,8 @@ export namespace Prisma {
     state: string | null
     maritalStatus: string
     dependents: number
-    totalIncome: number
+    monthlyIncome: number
+    extraIncome: number
     occupation: string
     incomeFrequency: $Enums.IncomeFrequency
     jobStability: $Enums.JobStability
@@ -7050,7 +7061,8 @@ export namespace Prisma {
     state?: boolean
     maritalStatus?: boolean
     dependents?: boolean
-    totalIncome?: boolean
+    monthlyIncome?: boolean
+    extraIncome?: boolean
     occupation?: boolean
     incomeFrequency?: boolean
     jobStability?: boolean
@@ -7089,7 +7101,8 @@ export namespace Prisma {
     state?: boolean
     maritalStatus?: boolean
     dependents?: boolean
-    totalIncome?: boolean
+    monthlyIncome?: boolean
+    extraIncome?: boolean
     occupation?: boolean
     incomeFrequency?: boolean
     jobStability?: boolean
@@ -7125,7 +7138,8 @@ export namespace Prisma {
     state?: boolean
     maritalStatus?: boolean
     dependents?: boolean
-    totalIncome?: boolean
+    monthlyIncome?: boolean
+    extraIncome?: boolean
     occupation?: boolean
     incomeFrequency?: boolean
     jobStability?: boolean
@@ -7161,7 +7175,8 @@ export namespace Prisma {
     state?: boolean
     maritalStatus?: boolean
     dependents?: boolean
-    totalIncome?: boolean
+    monthlyIncome?: boolean
+    extraIncome?: boolean
     occupation?: boolean
     incomeFrequency?: boolean
     jobStability?: boolean
@@ -7187,7 +7202,7 @@ export namespace Prisma {
     plannedPurchases?: boolean
   }
 
-  export type UserInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "age" | "country" | "state" | "maritalStatus" | "dependents" | "totalIncome" | "occupation" | "incomeFrequency" | "jobStability" | "cashSavings" | "investments" | "retirementSavings" | "realEstateVAlue" | "totalDebt" | "monthlyDebtPayment" | "creditScore" | "totalMonthlyExpenses" | "housing" | "transportation" | "food" | "subscription" | "miscellaneous" | "education" | "mismiscallaneous" | "riskTolerance" | "retirementAge" | "emergencyFundMonthsCovered" | "spendingHabits" | "plannedPurchases", ExtArgs["result"]["userInfo"]>
+  export type UserInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "age" | "country" | "state" | "maritalStatus" | "dependents" | "monthlyIncome" | "extraIncome" | "occupation" | "incomeFrequency" | "jobStability" | "cashSavings" | "investments" | "retirementSavings" | "realEstateVAlue" | "totalDebt" | "monthlyDebtPayment" | "creditScore" | "totalMonthlyExpenses" | "housing" | "transportation" | "food" | "subscription" | "miscellaneous" | "education" | "mismiscallaneous" | "riskTolerance" | "retirementAge" | "emergencyFundMonthsCovered" | "spendingHabits" | "plannedPurchases", ExtArgs["result"]["userInfo"]>
   export type UserInfoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     deptBreakDowns?: boolean | UserInfo$deptBreakDownsArgs<ExtArgs>
@@ -7217,7 +7232,8 @@ export namespace Prisma {
       state: string | null
       maritalStatus: string
       dependents: number
-      totalIncome: number
+      monthlyIncome: number
+      extraIncome: number
       occupation: string
       incomeFrequency: $Enums.IncomeFrequency
       jobStability: $Enums.JobStability
@@ -7675,7 +7691,8 @@ export namespace Prisma {
     readonly state: FieldRef<"UserInfo", 'String'>
     readonly maritalStatus: FieldRef<"UserInfo", 'String'>
     readonly dependents: FieldRef<"UserInfo", 'Int'>
-    readonly totalIncome: FieldRef<"UserInfo", 'Float'>
+    readonly monthlyIncome: FieldRef<"UserInfo", 'Float'>
+    readonly extraIncome: FieldRef<"UserInfo", 'Float'>
     readonly occupation: FieldRef<"UserInfo", 'String'>
     readonly incomeFrequency: FieldRef<"UserInfo", 'IncomeFrequency'>
     readonly jobStability: FieldRef<"UserInfo", 'JobStability'>
@@ -8174,12 +8191,12 @@ export namespace Prisma {
   }
 
   export type DeptBreakDownAvgAggregateOutputType = {
-    totalDebt: number | null
+    monthlyPayment: number | null
     balance: number | null
   }
 
   export type DeptBreakDownSumAggregateOutputType = {
-    totalDebt: number | null
+    monthlyPayment: number | null
     balance: number | null
   }
 
@@ -8187,7 +8204,7 @@ export namespace Prisma {
     id: string | null
     userInfoId: string | null
     type: $Enums.Credit_Card_Type | null
-    totalDebt: number | null
+    monthlyPayment: number | null
     balance: number | null
   }
 
@@ -8195,7 +8212,7 @@ export namespace Prisma {
     id: string | null
     userInfoId: string | null
     type: $Enums.Credit_Card_Type | null
-    totalDebt: number | null
+    monthlyPayment: number | null
     balance: number | null
   }
 
@@ -8203,19 +8220,19 @@ export namespace Prisma {
     id: number
     userInfoId: number
     type: number
-    totalDebt: number
+    monthlyPayment: number
     balance: number
     _all: number
   }
 
 
   export type DeptBreakDownAvgAggregateInputType = {
-    totalDebt?: true
+    monthlyPayment?: true
     balance?: true
   }
 
   export type DeptBreakDownSumAggregateInputType = {
-    totalDebt?: true
+    monthlyPayment?: true
     balance?: true
   }
 
@@ -8223,7 +8240,7 @@ export namespace Prisma {
     id?: true
     userInfoId?: true
     type?: true
-    totalDebt?: true
+    monthlyPayment?: true
     balance?: true
   }
 
@@ -8231,7 +8248,7 @@ export namespace Prisma {
     id?: true
     userInfoId?: true
     type?: true
-    totalDebt?: true
+    monthlyPayment?: true
     balance?: true
   }
 
@@ -8239,7 +8256,7 @@ export namespace Prisma {
     id?: true
     userInfoId?: true
     type?: true
-    totalDebt?: true
+    monthlyPayment?: true
     balance?: true
     _all?: true
   }
@@ -8334,7 +8351,7 @@ export namespace Prisma {
     id: string
     userInfoId: string
     type: $Enums.Credit_Card_Type
-    totalDebt: number
+    monthlyPayment: number
     balance: number
     _count: DeptBreakDownCountAggregateOutputType | null
     _avg: DeptBreakDownAvgAggregateOutputType | null
@@ -8361,7 +8378,7 @@ export namespace Prisma {
     id?: boolean
     userInfoId?: boolean
     type?: boolean
-    totalDebt?: boolean
+    monthlyPayment?: boolean
     balance?: boolean
     userinfo?: boolean | UserInfoDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["deptBreakDown"]>
@@ -8370,7 +8387,7 @@ export namespace Prisma {
     id?: boolean
     userInfoId?: boolean
     type?: boolean
-    totalDebt?: boolean
+    monthlyPayment?: boolean
     balance?: boolean
     userinfo?: boolean | UserInfoDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["deptBreakDown"]>
@@ -8379,7 +8396,7 @@ export namespace Prisma {
     id?: boolean
     userInfoId?: boolean
     type?: boolean
-    totalDebt?: boolean
+    monthlyPayment?: boolean
     balance?: boolean
     userinfo?: boolean | UserInfoDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["deptBreakDown"]>
@@ -8388,11 +8405,11 @@ export namespace Prisma {
     id?: boolean
     userInfoId?: boolean
     type?: boolean
-    totalDebt?: boolean
+    monthlyPayment?: boolean
     balance?: boolean
   }
 
-  export type DeptBreakDownOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userInfoId" | "type" | "totalDebt" | "balance", ExtArgs["result"]["deptBreakDown"]>
+  export type DeptBreakDownOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userInfoId" | "type" | "monthlyPayment" | "balance", ExtArgs["result"]["deptBreakDown"]>
   export type DeptBreakDownInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     userinfo?: boolean | UserInfoDefaultArgs<ExtArgs>
   }
@@ -8412,7 +8429,7 @@ export namespace Prisma {
       id: string
       userInfoId: string
       type: $Enums.Credit_Card_Type
-      totalDebt: number
+      monthlyPayment: number
       balance: number
     }, ExtArgs["result"]["deptBreakDown"]>
     composites: {}
@@ -8841,7 +8858,7 @@ export namespace Prisma {
     readonly id: FieldRef<"DeptBreakDown", 'String'>
     readonly userInfoId: FieldRef<"DeptBreakDown", 'String'>
     readonly type: FieldRef<"DeptBreakDown", 'Credit_Card_Type'>
-    readonly totalDebt: FieldRef<"DeptBreakDown", 'Int'>
+    readonly monthlyPayment: FieldRef<"DeptBreakDown", 'Int'>
     readonly balance: FieldRef<"DeptBreakDown", 'Int'>
   }
     
@@ -14703,7 +14720,8 @@ export namespace Prisma {
     state: 'state',
     maritalStatus: 'maritalStatus',
     dependents: 'dependents',
-    totalIncome: 'totalIncome',
+    monthlyIncome: 'monthlyIncome',
+    extraIncome: 'extraIncome',
     occupation: 'occupation',
     incomeFrequency: 'incomeFrequency',
     jobStability: 'jobStability',
@@ -14736,7 +14754,7 @@ export namespace Prisma {
     id: 'id',
     userInfoId: 'userInfoId',
     type: 'type',
-    totalDebt: 'totalDebt',
+    monthlyPayment: 'monthlyPayment',
     balance: 'balance'
   };
 
@@ -14997,7 +15015,7 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     emailVerified?: BoolFilter<"User"> | boolean
-    image?: StringFilter<"User"> | string
+    image?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     lastReset?: DateTimeFilter<"User"> | Date | string
@@ -15016,7 +15034,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     emailVerified?: SortOrder
-    image?: SortOrder
+    image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     lastReset?: SortOrder
@@ -15038,7 +15056,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
     emailVerified?: BoolFilter<"User"> | boolean
-    image?: StringFilter<"User"> | string
+    image?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     lastReset?: DateTimeFilter<"User"> | Date | string
@@ -15057,7 +15075,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     emailVerified?: SortOrder
-    image?: SortOrder
+    image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     lastReset?: SortOrder
@@ -15078,7 +15096,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     emailVerified?: BoolWithAggregatesFilter<"User"> | boolean
-    image?: StringWithAggregatesFilter<"User"> | string
+    image?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     lastReset?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -15320,7 +15338,8 @@ export namespace Prisma {
     state?: StringNullableFilter<"UserInfo"> | string | null
     maritalStatus?: StringFilter<"UserInfo"> | string
     dependents?: IntFilter<"UserInfo"> | number
-    totalIncome?: FloatFilter<"UserInfo"> | number
+    monthlyIncome?: FloatFilter<"UserInfo"> | number
+    extraIncome?: FloatFilter<"UserInfo"> | number
     occupation?: StringFilter<"UserInfo"> | string
     incomeFrequency?: EnumIncomeFrequencyFilter<"UserInfo"> | $Enums.IncomeFrequency
     jobStability?: EnumJobStabilityFilter<"UserInfo"> | $Enums.JobStability
@@ -15358,7 +15377,8 @@ export namespace Prisma {
     state?: SortOrderInput | SortOrder
     maritalStatus?: SortOrder
     dependents?: SortOrder
-    totalIncome?: SortOrder
+    monthlyIncome?: SortOrder
+    extraIncome?: SortOrder
     occupation?: SortOrder
     incomeFrequency?: SortOrder
     jobStability?: SortOrder
@@ -15399,7 +15419,8 @@ export namespace Prisma {
     state?: StringNullableFilter<"UserInfo"> | string | null
     maritalStatus?: StringFilter<"UserInfo"> | string
     dependents?: IntFilter<"UserInfo"> | number
-    totalIncome?: FloatFilter<"UserInfo"> | number
+    monthlyIncome?: FloatFilter<"UserInfo"> | number
+    extraIncome?: FloatFilter<"UserInfo"> | number
     occupation?: StringFilter<"UserInfo"> | string
     incomeFrequency?: EnumIncomeFrequencyFilter<"UserInfo"> | $Enums.IncomeFrequency
     jobStability?: EnumJobStabilityFilter<"UserInfo"> | $Enums.JobStability
@@ -15437,7 +15458,8 @@ export namespace Prisma {
     state?: SortOrderInput | SortOrder
     maritalStatus?: SortOrder
     dependents?: SortOrder
-    totalIncome?: SortOrder
+    monthlyIncome?: SortOrder
+    extraIncome?: SortOrder
     occupation?: SortOrder
     incomeFrequency?: SortOrder
     jobStability?: SortOrder
@@ -15480,7 +15502,8 @@ export namespace Prisma {
     state?: StringNullableWithAggregatesFilter<"UserInfo"> | string | null
     maritalStatus?: StringWithAggregatesFilter<"UserInfo"> | string
     dependents?: IntWithAggregatesFilter<"UserInfo"> | number
-    totalIncome?: FloatWithAggregatesFilter<"UserInfo"> | number
+    monthlyIncome?: FloatWithAggregatesFilter<"UserInfo"> | number
+    extraIncome?: FloatWithAggregatesFilter<"UserInfo"> | number
     occupation?: StringWithAggregatesFilter<"UserInfo"> | string
     incomeFrequency?: EnumIncomeFrequencyWithAggregatesFilter<"UserInfo"> | $Enums.IncomeFrequency
     jobStability?: EnumJobStabilityWithAggregatesFilter<"UserInfo"> | $Enums.JobStability
@@ -15513,7 +15536,7 @@ export namespace Prisma {
     id?: StringFilter<"DeptBreakDown"> | string
     userInfoId?: StringFilter<"DeptBreakDown"> | string
     type?: EnumCredit_Card_TypeFilter<"DeptBreakDown"> | $Enums.Credit_Card_Type
-    totalDebt?: IntFilter<"DeptBreakDown"> | number
+    monthlyPayment?: IntFilter<"DeptBreakDown"> | number
     balance?: IntFilter<"DeptBreakDown"> | number
     userinfo?: XOR<UserInfoScalarRelationFilter, UserInfoWhereInput>
   }
@@ -15522,7 +15545,7 @@ export namespace Prisma {
     id?: SortOrder
     userInfoId?: SortOrder
     type?: SortOrder
-    totalDebt?: SortOrder
+    monthlyPayment?: SortOrder
     balance?: SortOrder
     userinfo?: UserInfoOrderByWithRelationInput
   }
@@ -15534,7 +15557,7 @@ export namespace Prisma {
     NOT?: DeptBreakDownWhereInput | DeptBreakDownWhereInput[]
     userInfoId?: StringFilter<"DeptBreakDown"> | string
     type?: EnumCredit_Card_TypeFilter<"DeptBreakDown"> | $Enums.Credit_Card_Type
-    totalDebt?: IntFilter<"DeptBreakDown"> | number
+    monthlyPayment?: IntFilter<"DeptBreakDown"> | number
     balance?: IntFilter<"DeptBreakDown"> | number
     userinfo?: XOR<UserInfoScalarRelationFilter, UserInfoWhereInput>
   }, "id">
@@ -15543,7 +15566,7 @@ export namespace Prisma {
     id?: SortOrder
     userInfoId?: SortOrder
     type?: SortOrder
-    totalDebt?: SortOrder
+    monthlyPayment?: SortOrder
     balance?: SortOrder
     _count?: DeptBreakDownCountOrderByAggregateInput
     _avg?: DeptBreakDownAvgOrderByAggregateInput
@@ -15559,7 +15582,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"DeptBreakDown"> | string
     userInfoId?: StringWithAggregatesFilter<"DeptBreakDown"> | string
     type?: EnumCredit_Card_TypeWithAggregatesFilter<"DeptBreakDown"> | $Enums.Credit_Card_Type
-    totalDebt?: IntWithAggregatesFilter<"DeptBreakDown"> | number
+    monthlyPayment?: IntWithAggregatesFilter<"DeptBreakDown"> | number
     balance?: IntWithAggregatesFilter<"DeptBreakDown"> | number
   }
 
@@ -15840,7 +15863,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     lastReset?: Date | string
@@ -15859,7 +15882,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     lastReset?: Date | string
@@ -15878,7 +15901,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15897,7 +15920,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15916,7 +15939,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     lastReset?: Date | string
@@ -15929,7 +15952,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15942,7 +15965,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16208,7 +16231,8 @@ export namespace Prisma {
     state?: string | null
     maritalStatus: string
     dependents: number
-    totalIncome: number
+    monthlyIncome: number
+    extraIncome: number
     occupation: string
     incomeFrequency: $Enums.IncomeFrequency
     jobStability?: $Enums.JobStability
@@ -16246,7 +16270,8 @@ export namespace Prisma {
     state?: string | null
     maritalStatus: string
     dependents: number
-    totalIncome: number
+    monthlyIncome: number
+    extraIncome: number
     occupation: string
     incomeFrequency: $Enums.IncomeFrequency
     jobStability?: $Enums.JobStability
@@ -16282,7 +16307,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: StringFieldUpdateOperationsInput | string
     dependents?: IntFieldUpdateOperationsInput | number
-    totalIncome?: FloatFieldUpdateOperationsInput | number
+    monthlyIncome?: FloatFieldUpdateOperationsInput | number
+    extraIncome?: FloatFieldUpdateOperationsInput | number
     occupation?: StringFieldUpdateOperationsInput | string
     incomeFrequency?: EnumIncomeFrequencyFieldUpdateOperationsInput | $Enums.IncomeFrequency
     jobStability?: EnumJobStabilityFieldUpdateOperationsInput | $Enums.JobStability
@@ -16320,7 +16346,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: StringFieldUpdateOperationsInput | string
     dependents?: IntFieldUpdateOperationsInput | number
-    totalIncome?: FloatFieldUpdateOperationsInput | number
+    monthlyIncome?: FloatFieldUpdateOperationsInput | number
+    extraIncome?: FloatFieldUpdateOperationsInput | number
     occupation?: StringFieldUpdateOperationsInput | string
     incomeFrequency?: EnumIncomeFrequencyFieldUpdateOperationsInput | $Enums.IncomeFrequency
     jobStability?: EnumJobStabilityFieldUpdateOperationsInput | $Enums.JobStability
@@ -16357,7 +16384,8 @@ export namespace Prisma {
     state?: string | null
     maritalStatus: string
     dependents: number
-    totalIncome: number
+    monthlyIncome: number
+    extraIncome: number
     occupation: string
     incomeFrequency: $Enums.IncomeFrequency
     jobStability?: $Enums.JobStability
@@ -16391,7 +16419,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: StringFieldUpdateOperationsInput | string
     dependents?: IntFieldUpdateOperationsInput | number
-    totalIncome?: FloatFieldUpdateOperationsInput | number
+    monthlyIncome?: FloatFieldUpdateOperationsInput | number
+    extraIncome?: FloatFieldUpdateOperationsInput | number
     occupation?: StringFieldUpdateOperationsInput | string
     incomeFrequency?: EnumIncomeFrequencyFieldUpdateOperationsInput | $Enums.IncomeFrequency
     jobStability?: EnumJobStabilityFieldUpdateOperationsInput | $Enums.JobStability
@@ -16426,7 +16455,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: StringFieldUpdateOperationsInput | string
     dependents?: IntFieldUpdateOperationsInput | number
-    totalIncome?: FloatFieldUpdateOperationsInput | number
+    monthlyIncome?: FloatFieldUpdateOperationsInput | number
+    extraIncome?: FloatFieldUpdateOperationsInput | number
     occupation?: StringFieldUpdateOperationsInput | string
     incomeFrequency?: EnumIncomeFrequencyFieldUpdateOperationsInput | $Enums.IncomeFrequency
     jobStability?: EnumJobStabilityFieldUpdateOperationsInput | $Enums.JobStability
@@ -16455,7 +16485,7 @@ export namespace Prisma {
   export type DeptBreakDownCreateInput = {
     id?: string
     type: $Enums.Credit_Card_Type
-    totalDebt?: number
+    monthlyPayment?: number
     balance?: number
     userinfo: UserInfoCreateNestedOneWithoutDeptBreakDownsInput
   }
@@ -16464,14 +16494,14 @@ export namespace Prisma {
     id?: string
     userInfoId: string
     type: $Enums.Credit_Card_Type
-    totalDebt?: number
+    monthlyPayment?: number
     balance?: number
   }
 
   export type DeptBreakDownUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: EnumCredit_Card_TypeFieldUpdateOperationsInput | $Enums.Credit_Card_Type
-    totalDebt?: IntFieldUpdateOperationsInput | number
+    monthlyPayment?: IntFieldUpdateOperationsInput | number
     balance?: IntFieldUpdateOperationsInput | number
     userinfo?: UserInfoUpdateOneRequiredWithoutDeptBreakDownsNestedInput
   }
@@ -16480,7 +16510,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userInfoId?: StringFieldUpdateOperationsInput | string
     type?: EnumCredit_Card_TypeFieldUpdateOperationsInput | $Enums.Credit_Card_Type
-    totalDebt?: IntFieldUpdateOperationsInput | number
+    monthlyPayment?: IntFieldUpdateOperationsInput | number
     balance?: IntFieldUpdateOperationsInput | number
   }
 
@@ -16488,14 +16518,14 @@ export namespace Prisma {
     id?: string
     userInfoId: string
     type: $Enums.Credit_Card_Type
-    totalDebt?: number
+    monthlyPayment?: number
     balance?: number
   }
 
   export type DeptBreakDownUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: EnumCredit_Card_TypeFieldUpdateOperationsInput | $Enums.Credit_Card_Type
-    totalDebt?: IntFieldUpdateOperationsInput | number
+    monthlyPayment?: IntFieldUpdateOperationsInput | number
     balance?: IntFieldUpdateOperationsInput | number
   }
 
@@ -16503,7 +16533,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userInfoId?: StringFieldUpdateOperationsInput | string
     type?: EnumCredit_Card_TypeFieldUpdateOperationsInput | $Enums.Credit_Card_Type
-    totalDebt?: IntFieldUpdateOperationsInput | number
+    monthlyPayment?: IntFieldUpdateOperationsInput | number
     balance?: IntFieldUpdateOperationsInput | number
   }
 
@@ -16792,6 +16822,21 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -16847,6 +16892,11 @@ export namespace Prisma {
     every?: PreviewQuestionsWhereInput
     some?: PreviewQuestionsWhereInput
     none?: PreviewQuestionsWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type SessionOrderByRelationAggregateInput = {
@@ -16942,6 +16992,24 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -16972,29 +17040,9 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type SessionCountOrderByAggregateInput = {
@@ -17028,24 +17076,6 @@ export namespace Prisma {
     ipAddress?: SortOrder
     userAgent?: SortOrder
     userId?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type DateTimeNullableFilter<$PrismaModel = never> = {
@@ -17224,7 +17254,8 @@ export namespace Prisma {
     state?: SortOrder
     maritalStatus?: SortOrder
     dependents?: SortOrder
-    totalIncome?: SortOrder
+    monthlyIncome?: SortOrder
+    extraIncome?: SortOrder
     occupation?: SortOrder
     incomeFrequency?: SortOrder
     jobStability?: SortOrder
@@ -17253,7 +17284,8 @@ export namespace Prisma {
   export type UserInfoAvgOrderByAggregateInput = {
     age?: SortOrder
     dependents?: SortOrder
-    totalIncome?: SortOrder
+    monthlyIncome?: SortOrder
+    extraIncome?: SortOrder
     cashSavings?: SortOrder
     investments?: SortOrder
     retirementSavings?: SortOrder
@@ -17282,7 +17314,8 @@ export namespace Prisma {
     state?: SortOrder
     maritalStatus?: SortOrder
     dependents?: SortOrder
-    totalIncome?: SortOrder
+    monthlyIncome?: SortOrder
+    extraIncome?: SortOrder
     occupation?: SortOrder
     incomeFrequency?: SortOrder
     jobStability?: SortOrder
@@ -17316,7 +17349,8 @@ export namespace Prisma {
     state?: SortOrder
     maritalStatus?: SortOrder
     dependents?: SortOrder
-    totalIncome?: SortOrder
+    monthlyIncome?: SortOrder
+    extraIncome?: SortOrder
     occupation?: SortOrder
     incomeFrequency?: SortOrder
     jobStability?: SortOrder
@@ -17344,7 +17378,8 @@ export namespace Prisma {
   export type UserInfoSumOrderByAggregateInput = {
     age?: SortOrder
     dependents?: SortOrder
-    totalIncome?: SortOrder
+    monthlyIncome?: SortOrder
+    extraIncome?: SortOrder
     cashSavings?: SortOrder
     investments?: SortOrder
     retirementSavings?: SortOrder
@@ -17436,12 +17471,12 @@ export namespace Prisma {
     id?: SortOrder
     userInfoId?: SortOrder
     type?: SortOrder
-    totalDebt?: SortOrder
+    monthlyPayment?: SortOrder
     balance?: SortOrder
   }
 
   export type DeptBreakDownAvgOrderByAggregateInput = {
-    totalDebt?: SortOrder
+    monthlyPayment?: SortOrder
     balance?: SortOrder
   }
 
@@ -17449,7 +17484,7 @@ export namespace Prisma {
     id?: SortOrder
     userInfoId?: SortOrder
     type?: SortOrder
-    totalDebt?: SortOrder
+    monthlyPayment?: SortOrder
     balance?: SortOrder
   }
 
@@ -17457,12 +17492,12 @@ export namespace Prisma {
     id?: SortOrder
     userInfoId?: SortOrder
     type?: SortOrder
-    totalDebt?: SortOrder
+    monthlyPayment?: SortOrder
     balance?: SortOrder
   }
 
   export type DeptBreakDownSumOrderByAggregateInput = {
-    totalDebt?: SortOrder
+    monthlyPayment?: SortOrder
     balance?: SortOrder
   }
 
@@ -17745,6 +17780,10 @@ export namespace Prisma {
     set?: boolean
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -17921,10 +17960,6 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutSessionsInput, UserUncheckedCreateWithoutSessionsInput>
     connectOrCreate?: UserCreateOrConnectWithoutSessionsInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type UserUpdateOneRequiredWithoutSessionsNestedInput = {
@@ -18241,6 +18276,20 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -18288,6 +18337,34 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -18327,48 +18404,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -18609,7 +18644,8 @@ export namespace Prisma {
     state?: string | null
     maritalStatus: string
     dependents: number
-    totalIncome: number
+    monthlyIncome: number
+    extraIncome: number
     occupation: string
     incomeFrequency: $Enums.IncomeFrequency
     jobStability?: $Enums.JobStability
@@ -18645,7 +18681,8 @@ export namespace Prisma {
     state?: string | null
     maritalStatus: string
     dependents: number
-    totalIncome: number
+    monthlyIncome: number
+    extraIncome: number
     occupation: string
     incomeFrequency: $Enums.IncomeFrequency
     jobStability?: $Enums.JobStability
@@ -18830,7 +18867,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: StringFieldUpdateOperationsInput | string
     dependents?: IntFieldUpdateOperationsInput | number
-    totalIncome?: FloatFieldUpdateOperationsInput | number
+    monthlyIncome?: FloatFieldUpdateOperationsInput | number
+    extraIncome?: FloatFieldUpdateOperationsInput | number
     occupation?: StringFieldUpdateOperationsInput | string
     incomeFrequency?: EnumIncomeFrequencyFieldUpdateOperationsInput | $Enums.IncomeFrequency
     jobStability?: EnumJobStabilityFieldUpdateOperationsInput | $Enums.JobStability
@@ -18866,7 +18904,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: StringFieldUpdateOperationsInput | string
     dependents?: IntFieldUpdateOperationsInput | number
-    totalIncome?: FloatFieldUpdateOperationsInput | number
+    monthlyIncome?: FloatFieldUpdateOperationsInput | number
+    extraIncome?: FloatFieldUpdateOperationsInput | number
     occupation?: StringFieldUpdateOperationsInput | string
     incomeFrequency?: EnumIncomeFrequencyFieldUpdateOperationsInput | $Enums.IncomeFrequency
     jobStability?: EnumJobStabilityFieldUpdateOperationsInput | $Enums.JobStability
@@ -18977,7 +19016,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     lastReset?: Date | string
@@ -18995,7 +19034,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     lastReset?: Date | string
@@ -19029,7 +19068,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19047,7 +19086,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19065,7 +19104,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     lastReset?: Date | string
@@ -19083,7 +19122,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     lastReset?: Date | string
@@ -19117,7 +19156,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19135,7 +19174,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19153,7 +19192,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     lastReset?: Date | string
@@ -19171,7 +19210,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     lastReset?: Date | string
@@ -19192,14 +19231,14 @@ export namespace Prisma {
   export type DeptBreakDownCreateWithoutUserinfoInput = {
     id?: string
     type: $Enums.Credit_Card_Type
-    totalDebt?: number
+    monthlyPayment?: number
     balance?: number
   }
 
   export type DeptBreakDownUncheckedCreateWithoutUserinfoInput = {
     id?: string
     type: $Enums.Credit_Card_Type
-    totalDebt?: number
+    monthlyPayment?: number
     balance?: number
   }
 
@@ -19255,7 +19294,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19273,7 +19312,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19309,7 +19348,7 @@ export namespace Prisma {
     id?: StringFilter<"DeptBreakDown"> | string
     userInfoId?: StringFilter<"DeptBreakDown"> | string
     type?: EnumCredit_Card_TypeFilter<"DeptBreakDown"> | $Enums.Credit_Card_Type
-    totalDebt?: IntFilter<"DeptBreakDown"> | number
+    monthlyPayment?: IntFilter<"DeptBreakDown"> | number
     balance?: IntFilter<"DeptBreakDown"> | number
   }
 
@@ -19349,7 +19388,8 @@ export namespace Prisma {
     state?: string | null
     maritalStatus: string
     dependents: number
-    totalIncome: number
+    monthlyIncome: number
+    extraIncome: number
     occupation: string
     incomeFrequency: $Enums.IncomeFrequency
     jobStability?: $Enums.JobStability
@@ -19386,7 +19426,8 @@ export namespace Prisma {
     state?: string | null
     maritalStatus: string
     dependents: number
-    totalIncome: number
+    monthlyIncome: number
+    extraIncome: number
     occupation: string
     incomeFrequency: $Enums.IncomeFrequency
     jobStability?: $Enums.JobStability
@@ -19437,7 +19478,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: StringFieldUpdateOperationsInput | string
     dependents?: IntFieldUpdateOperationsInput | number
-    totalIncome?: FloatFieldUpdateOperationsInput | number
+    monthlyIncome?: FloatFieldUpdateOperationsInput | number
+    extraIncome?: FloatFieldUpdateOperationsInput | number
     occupation?: StringFieldUpdateOperationsInput | string
     incomeFrequency?: EnumIncomeFrequencyFieldUpdateOperationsInput | $Enums.IncomeFrequency
     jobStability?: EnumJobStabilityFieldUpdateOperationsInput | $Enums.JobStability
@@ -19474,7 +19516,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: StringFieldUpdateOperationsInput | string
     dependents?: IntFieldUpdateOperationsInput | number
-    totalIncome?: FloatFieldUpdateOperationsInput | number
+    monthlyIncome?: FloatFieldUpdateOperationsInput | number
+    extraIncome?: FloatFieldUpdateOperationsInput | number
     occupation?: StringFieldUpdateOperationsInput | string
     incomeFrequency?: EnumIncomeFrequencyFieldUpdateOperationsInput | $Enums.IncomeFrequency
     jobStability?: EnumJobStabilityFieldUpdateOperationsInput | $Enums.JobStability
@@ -19506,7 +19549,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     lastReset?: Date | string
@@ -19524,7 +19567,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     lastReset?: Date | string
@@ -19558,7 +19601,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19576,7 +19619,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19597,7 +19640,8 @@ export namespace Prisma {
     state?: string | null
     maritalStatus: string
     dependents: number
-    totalIncome: number
+    monthlyIncome: number
+    extraIncome: number
     occupation: string
     incomeFrequency: $Enums.IncomeFrequency
     jobStability?: $Enums.JobStability
@@ -19634,7 +19678,8 @@ export namespace Prisma {
     state?: string | null
     maritalStatus: string
     dependents: number
-    totalIncome: number
+    monthlyIncome: number
+    extraIncome: number
     occupation: string
     incomeFrequency: $Enums.IncomeFrequency
     jobStability?: $Enums.JobStability
@@ -19685,7 +19730,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: StringFieldUpdateOperationsInput | string
     dependents?: IntFieldUpdateOperationsInput | number
-    totalIncome?: FloatFieldUpdateOperationsInput | number
+    monthlyIncome?: FloatFieldUpdateOperationsInput | number
+    extraIncome?: FloatFieldUpdateOperationsInput | number
     occupation?: StringFieldUpdateOperationsInput | string
     incomeFrequency?: EnumIncomeFrequencyFieldUpdateOperationsInput | $Enums.IncomeFrequency
     jobStability?: EnumJobStabilityFieldUpdateOperationsInput | $Enums.JobStability
@@ -19722,7 +19768,8 @@ export namespace Prisma {
     state?: NullableStringFieldUpdateOperationsInput | string | null
     maritalStatus?: StringFieldUpdateOperationsInput | string
     dependents?: IntFieldUpdateOperationsInput | number
-    totalIncome?: FloatFieldUpdateOperationsInput | number
+    monthlyIncome?: FloatFieldUpdateOperationsInput | number
+    extraIncome?: FloatFieldUpdateOperationsInput | number
     occupation?: StringFieldUpdateOperationsInput | string
     incomeFrequency?: EnumIncomeFrequencyFieldUpdateOperationsInput | $Enums.IncomeFrequency
     jobStability?: EnumJobStabilityFieldUpdateOperationsInput | $Enums.JobStability
@@ -19778,7 +19825,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     lastReset?: Date | string
@@ -19796,7 +19843,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     lastReset?: Date | string
@@ -19857,7 +19904,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19875,7 +19922,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19937,7 +19984,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     lastReset?: Date | string
@@ -19955,7 +20002,7 @@ export namespace Prisma {
     name: string
     email: string
     emailVerified: boolean
-    image: string
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
     lastReset?: Date | string
@@ -19989,7 +20036,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20007,7 +20054,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastReset?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20197,7 +20244,7 @@ export namespace Prisma {
   export type DeptBreakDownCreateManyUserinfoInput = {
     id?: string
     type: $Enums.Credit_Card_Type
-    totalDebt?: number
+    monthlyPayment?: number
     balance?: number
   }
 
@@ -20212,21 +20259,21 @@ export namespace Prisma {
   export type DeptBreakDownUpdateWithoutUserinfoInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: EnumCredit_Card_TypeFieldUpdateOperationsInput | $Enums.Credit_Card_Type
-    totalDebt?: IntFieldUpdateOperationsInput | number
+    monthlyPayment?: IntFieldUpdateOperationsInput | number
     balance?: IntFieldUpdateOperationsInput | number
   }
 
   export type DeptBreakDownUncheckedUpdateWithoutUserinfoInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: EnumCredit_Card_TypeFieldUpdateOperationsInput | $Enums.Credit_Card_Type
-    totalDebt?: IntFieldUpdateOperationsInput | number
+    monthlyPayment?: IntFieldUpdateOperationsInput | number
     balance?: IntFieldUpdateOperationsInput | number
   }
 
   export type DeptBreakDownUncheckedUpdateManyWithoutUserinfoInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: EnumCredit_Card_TypeFieldUpdateOperationsInput | $Enums.Credit_Card_Type
-    totalDebt?: IntFieldUpdateOperationsInput | number
+    monthlyPayment?: IntFieldUpdateOperationsInput | number
     balance?: IntFieldUpdateOperationsInput | number
   }
 

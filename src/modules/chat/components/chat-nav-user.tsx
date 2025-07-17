@@ -83,19 +83,20 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
     queryFn: () => getUserCurrentActiveSubscription(),
   });
 
+  const session = authClient.useSession();
+
   const handleDeleteAccount = async () => {
     startTransition(async () => {
-      const res = await deleteUserAccont();
-      if (res.status === 200) {
-        toast.success(res.mesasge);
-        await authClient.signOut({
-          fetchOptions: {
-            onSuccess: async () => {
-              router.push("/sign-in");
-            },
-          },
-        });
-      } else toast.error(res.mesasge);
+      const res = await authClient.deleteUser({
+        token: session?.data?.session?.token,
+        callbackURL: "/sign-in",
+      });
+      if (res.data?.success) {
+        toast.success("Account deleted successfully.");
+        router.push("/sign-in");
+      } else {
+        toast.error(res.data?.message || "Failed to delete account.");
+      }
     });
   };
   return (
@@ -308,6 +309,93 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
                   </div>
                 </ModalProvider>
               </DropdownMenuItem>
+
+              {/* <DropdownMenuItem asChild>
+                <ModalProvider
+                  title="Account"
+                  description="See yourself in"
+                  trigger={
+                    <div className="flex items-center gap-2 rounded-md cursor-pointer hover:bg-sidebar-accent px-2 py-2 text-sm">
+                      <User2Icon className="size-4 text-muted-foreground" />
+                      Profile
+                    </div>
+                  }
+                >
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-12 gap-4 items-center w-full">
+                      <Label className="text-sm col-span-3">Name</Label>
+                      <Input
+                        type="text"
+                        value={name}
+                        className="col-span-9"
+                        disabled
+                      />
+                    </div>
+                    <div className="grid grid-cols-12 gap-4 items-center">
+                      <Label className="text-sm col-span-3">Email</Label>
+                      <Input
+                        type="email"
+                        value={email}
+                        className="col-span-9"
+                        disabled
+                      />
+                    </div>
+
+                    <Separator />
+
+                    <div>
+                      <div className="text-sm flex justify-between items-center">
+                        <span className="flex  h-full items-center gap-2 text-red-500">
+                          <TriangleAlert className="h-4 w-4" />
+                          Delete Account
+                        </span>
+
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              className="w-fit cursor-pointer"
+                            >
+                              {isPending ? (
+                                <div className="flex items-center gap-2">
+                                  <Loader2 className="h-4 w-4 animate-spin" />
+                                  Deleting...
+                                </div>
+                              ) : (
+                                "Delete"
+                              )}
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>
+                                Are you absolutely sure?
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                This action cannot be undone. This will
+                                permanently delete your account and remove your
+                                data from our servers.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction onClick={handleDeleteAccount}>
+                                Continue
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Warning: This action cannot be undone. This will
+                      permanently delete your account and remove your data from
+                      our servers.
+                    </p>
+                  </div>
+                </ModalProvider>
+              </DropdownMenuItem> */}
               <DropdownMenuItem
                 onClick={async () =>
                   await authClient.signOut({

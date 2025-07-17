@@ -178,7 +178,8 @@ exports.Prisma.UserInfoScalarFieldEnum = {
   state: 'state',
   maritalStatus: 'maritalStatus',
   dependents: 'dependents',
-  totalIncome: 'totalIncome',
+  monthlyIncome: 'monthlyIncome',
+  extraIncome: 'extraIncome',
   occupation: 'occupation',
   incomeFrequency: 'incomeFrequency',
   jobStability: 'jobStability',
@@ -208,7 +209,7 @@ exports.Prisma.DeptBreakDownScalarFieldEnum = {
   id: 'id',
   userInfoId: 'userInfoId',
   type: 'type',
-  totalDebt: 'totalDebt',
+  monthlyPayment: 'monthlyPayment',
   balance: 'balance'
 };
 

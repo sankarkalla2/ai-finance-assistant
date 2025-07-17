@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
+import { Resend } from "resend";
 import { magicLink } from "better-auth/plugins";
 import {
   polar,
@@ -10,6 +11,9 @@ import {
 } from "@polar-sh/better-auth";
 import { db } from "./db";
 import { polarClient } from "./utils/polar-client";
+import MagicLinkEmail from "@/components/email-templates/magic-link";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const auth = betterAuth({
   database: prismaAdapter(db, {
@@ -28,7 +32,13 @@ export const auth = betterAuth({
   plugins: [
     magicLink({
       sendMagicLink: async (data, request) => {
-        console.log(data);
+        const { data: res, error } = await resend.emails.send({
+          from: "Ask Your Finance <no-reply@updates.askyourfinance.site>",
+          to: data.email,
+
+          subject: "Your Magic Link",
+          react: MagicLinkEmail({ magicLink: data.url }),
+        });
       },
     }),
     polar({
@@ -44,4 +54,9 @@ export const auth = betterAuth({
       ],
     }),
   ],
+  user: {
+    deleteUser: {
+      enabled: true,
+    },
+  },
 });
