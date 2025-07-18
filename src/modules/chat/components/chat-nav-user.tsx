@@ -283,8 +283,8 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
                               </div>
 
                               {!currenSubscription && (
-                                <Button className="bg-primary hover:bg-primary/90">
-                                  <Link href="/pricing">
+                                <Button className="bg-primary hover:bg-primary/90 " asChild>
+                                  <Link href="/upgrade">
                                     <Zap className="mr-2 h-4 w-4" />
                                     View Pricing
                                   </Link>

@@ -195,7 +195,7 @@ export const useOnboarduser = (userInfo: OnboardedUserType) => {
   const onSubmit = async (data: z.infer<typeof leanFormSchema>) => {
     setIsSubmitting(true);
 
-    console.log("Form submitted:", data);
+
     const res = await onboardNewUser(data);
     if (res.status === 200 || res.status === 201) {
       toast.success("Onboarding completed successfully");

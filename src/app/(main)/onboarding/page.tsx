@@ -19,7 +19,6 @@ const onboarding = async () => {
 
   const data = await getUserInfo(session.user.id);
   const userInfo = data.data;
-  console.log(userInfo);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-8 bg-white dark:bg-black">

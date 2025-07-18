@@ -42,3 +42,30 @@ export const formatDateWithTime = (date: Date | string) => {
     });
   }
 };
+
+export function gmailToName(gmail: string): string {
+  // Step 1: Get part before "@"
+  const username = gmail.split("@")[0];
+
+  // Step 2: Remove numbers
+  const noDigits = username.replace(/\d+/g, "");
+
+  // Step 3: Replace dots, underscores, and dashes with spaces
+  const cleaned = noDigits.replace(/[._-]+/g, " ");
+
+  // Step 4: Capitalize each word
+  const parts = cleaned
+    .split(" ")
+    .filter((p) => p.length > 0)
+    .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase());
+
+  return parts.length ? parts.join(" ") : "Random User";
+}
+
+export const createAvatar = (name: string) => {
+  const initials = name
+    .split(" ")
+    .map((word) => word[0].toUpperCase())
+    .join("");
+  return `https://ui-avatars.com/api/?name=${initials}&background=random`;
+};

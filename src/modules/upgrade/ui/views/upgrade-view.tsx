@@ -86,7 +86,7 @@ const UpgradeView = () => {
                 free: "5",
                 pro: "Unlimited",
               },
-              { feature: "AI Model", free: "GPT-3.5", pro: "GPT-4o" },
+              { feature: "AI Model", free: "GPT-4.0 mini", pro: "GPT-4.1" },
               {
                 feature: "Financial Data Entry",
                 free: "Basic",

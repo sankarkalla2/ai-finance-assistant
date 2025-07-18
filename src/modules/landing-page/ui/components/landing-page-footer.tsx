@@ -1,11 +1,6 @@
 import { Logo } from "@/components/logo";
 import { Separator } from "@/components/ui/separator";
-import {
-  DribbbleIcon,
-  GithubIcon,
-  TwitchIcon,
-  TwitterIcon,
-} from "lucide-react";
+import { TwitterIcon } from "lucide-react";
 import Link from "next/link";
 
 const footerLinks = [

@@ -1,13 +1,7 @@
 import {
-  Blocks,
-  Bot,
   BotMessageSquare,
-  ChartPie,
-  Film,
-  MessageCircle,
   MonitorSmartphone,
   PiggyBank,
-  Settings2,
   Shield,
 } from "lucide-react";
 import React from "react";
@@ -41,7 +35,10 @@ const features = [
 
 const Features = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center py-12" id="features">
+    <div
+      className="min-h-screen flex items-center justify-center py-12"
+      id="features"
+    >
       <div>
         <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-center">
           Unleash Your Creativity

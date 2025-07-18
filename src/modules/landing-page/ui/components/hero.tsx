@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, CirclePlay } from "lucide-react";
+import { ArrowUpRight} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -36,6 +36,7 @@ const Hero = () => {
           src={"/light-theme.png"}
           fill
           alt="logo"
+          loading="lazy"
           className="aspect-video rounded-md"
         />
       </div>

@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import { authClient, signIn } from "@/lib/auth-client";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn, createAvatar, gmailToName } from "@/lib/utils";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -81,7 +81,7 @@ export default function SignIn() {
                   await authClient.signIn.magicLink(
                     {
                       email,
-                      name: "User",
+                      name: gmailToName(email),
                       callbackURL: isUser.isUserExisted
                         ? "/chat"
                         : "/onboarding",
@@ -90,7 +90,7 @@ export default function SignIn() {
                       onRequest: (ctx) => {
                         setLoading(true);
                       },
-                      onResponse: (ctx) => {
+                      onResponse: async (ctx) => {
                         setLoading(false);
                         if (ctx.response.status === 200) {
                           toast.success(

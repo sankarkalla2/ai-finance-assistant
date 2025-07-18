@@ -53,8 +53,7 @@ export async function POST(req: Request) {
       });
     }
 
-    // const model = !!subscription ? "gpt-3.5-turbo" : "gpt-3.5-turbo";
-    console.log(chat.user.prompt);
+    
 
     // Stream response
     return streamText({
@@ -84,7 +83,7 @@ export async function POST(req: Request) {
       },
     }).toDataStreamResponse();
   } catch(err) {
-    console.log(err)
+    
     return new Response("Server error", { status: 500 });
   }
 }

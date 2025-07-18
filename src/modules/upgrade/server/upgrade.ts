@@ -13,7 +13,7 @@ export const getAllSubscriptions = async () => {
     sorting: ["price_amount"],
   });
 
-  console.log(products);
+
 
   return products.result.items;
 };

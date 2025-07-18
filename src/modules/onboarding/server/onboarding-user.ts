@@ -131,7 +131,7 @@ export const onboardNewUser = async (data: z.infer<typeof leanFormSchema>) => {
     } else {
       // Create new user info
 
-      console.log("has to create new user");
+     
       const [newUserinfo] = await db.$transaction([
         db.userInfo.create({
           data: {
@@ -214,11 +214,11 @@ export const onboardNewUser = async (data: z.infer<typeof leanFormSchema>) => {
           },
         }),
       ]);
-      console.log("New user info created:", newUserinfo);
+   
       return { success: true, data: newUserinfo, status: 201 };
     }
   } catch (error) {
-    console.error("Error onboarding user:", error);
+ 
     return { error: "Failed to save user information", status: 500 };
   }
 };
