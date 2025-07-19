@@ -7,7 +7,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1.0,
-      images: ["/light-theme.png"],
     },
     {
       url: "https://askyourfinance.site/onboarding",
@@ -30,9 +29,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: "https://askyourfinance.site/upgrade",
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 0.7,
-   
     },
   ];
 }
