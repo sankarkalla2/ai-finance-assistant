@@ -6,8 +6,9 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/chat", "/privacy", "/terms"],
+        disallow: ["/chat/", "/privacy", "/terms"],
       },
     ],
+    sitemap: `${process.env.NEXT_PUBLIC_APP_URL}/sitemap.xml`,
   };
 }
