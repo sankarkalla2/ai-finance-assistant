@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight} from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -13,7 +13,7 @@ const Hero = () => {
           Just released v1.0.0
         </Badge>
         <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold !leading-[1.2] tracking-tight">
-          Let AI Handle Your Finances
+          Take Control of Your Money, Not Just Track It
         </h1>
         <p className="mt-6 text-[17px] md:text-lg">
           Make smarter financial decisions with AI that understands your money.
