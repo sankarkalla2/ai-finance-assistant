@@ -214,7 +214,7 @@ export const generatePreviewQuestions = async (
   `;
 
   const response = await generateObject({
-    model: openai("gpt-4.1-nano"),
+    model: openai("gpt-4.1-mini"),
     prompt,
     schema: z.object({
       questions: z.array(z.string()),

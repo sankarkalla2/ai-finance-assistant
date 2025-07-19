@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { getUserCurrentActiveSubscription } from "@/modules/upgrade/server/upgrade";
 import { openai } from "@ai-sdk/openai";
-import { google } from '@ai-sdk/google';
+import { google } from "@ai-sdk/google";
 import { generateText, Message, streamText } from "ai";
 
 // Allow streaming responses up to 30 seconds
@@ -53,11 +53,10 @@ export async function POST(req: Request) {
       });
     }
 
-    
-
+    const model = !!subscription ? openai("gpt-4.1") : openai("gpt-4.1-mini");
     // Stream response
     return streamText({
-      model:  openai('gpt-4.1'),
+      model,
       messages,
       system: chat.user.prompt,
       async onFinish({ text }) {
@@ -82,8 +81,7 @@ export async function POST(req: Request) {
         }
       },
     }).toDataStreamResponse();
-  } catch(err) {
-    
+  } catch (err) {
     return new Response("Server error", { status: 500 });
   }
 }
