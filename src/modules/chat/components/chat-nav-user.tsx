@@ -59,9 +59,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { deleteUserAccont } from "@/app/server/user";
 import { toast } from "sonner";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getUserCurrentActiveSubscription } from "@/modules/upgrade/server/upgrade";
 import { Badge } from "@/components/ui/badge";
@@ -77,6 +76,7 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
   const { isMobile } = useSidebar();
   const { setTheme } = useTheme();
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const { data: currenSubscription, isLoading } = useQuery({
     queryKey: ["get-active-user-subscription"],
@@ -86,14 +86,13 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
   const session = authClient.useSession();
 
   const handleDeleteAccount = async () => {
+    console.log(session.data);
     startTransition(async () => {
-      const res = await authClient.deleteUser({
-        token: session?.data?.session?.token,
-        callbackURL: "/sign-in",
-      });
+      const res = await authClient.deleteUser({});
+      console.log(res, "error while deleting account");
       if (res.data?.success) {
-        toast.success("Account deleted successfully.");
-        router.push("/sign-in");
+        toast.success("Email sent to confirm account deletion.");
+        setIsOpen(false);
       } else {
         toast.error(res.data?.message || "Failed to delete account.");
       }
@@ -148,6 +147,8 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
                 <ModalProvider
+                  open={isOpen}
+                  onOpenChange={setIsOpen}
                   title="Account"
                   description="See yourself in"
                   trigger={
@@ -196,7 +197,7 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
                               {isPending ? (
                                 <div className="flex items-center gap-2">
                                   <Loader2 className="h-4 w-4 animate-spin" />
-                                  Deleting...
+                                  Sending email...
                                 </div>
                               ) : (
                                 "Delete"
@@ -209,9 +210,8 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
                                 Are you absolutely sure?
                               </AlertDialogTitle>
                               <AlertDialogDescription>
-                                This action cannot be undone. This will
-                                permanently delete your account and remove your
-                                data from our servers.
+                                We’ll send a confirmation link to your email to
+                                verify it’s you.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
@@ -283,7 +283,10 @@ export function NavUser({ name, email, avatar }: NavUserProps) {
                               </div>
 
                               {!currenSubscription && (
-                                <Button className="bg-primary hover:bg-primary/90 " asChild>
+                                <Button
+                                  className="bg-primary hover:bg-primary/90 "
+                                  asChild
+                                >
                                   <Link href="/upgrade">
                                     <Zap className="mr-2 h-4 w-4" />
                                     View Pricing

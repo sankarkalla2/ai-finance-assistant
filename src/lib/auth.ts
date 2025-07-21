@@ -12,6 +12,8 @@ import {
 import { db } from "./db";
 import { polarClient } from "./utils/polar-client";
 import MagicLinkEmail from "@/components/email-templates/magic-link";
+import { authClient } from "./auth-client";
+import { DeleteAccountEmail } from "@/components/email-templates/delete-account";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -57,6 +59,22 @@ export const auth = betterAuth({
   user: {
     deleteUser: {
       enabled: true,
+      sendDeleteAccountVerification: async (
+        {
+          user, // The user object
+          url, // The auto-generated URL for deletion
+          token, // The verification token  (can be used to generate custom URL)
+        },
+        request // The original request object (optional)
+      ) => {
+        // const { data: res, error } = await resend.emails.send({
+        //   from: "Ask Your Finance <no-reply@updates.askyourfinance.site>",
+        //   to: user.email,
+
+        //   subject: "Confirm Account Deletion",
+        //   react: DeleteAccountEmail({ deleteLink: url }),
+        // });
+      },
     },
   },
   rateLimit: {

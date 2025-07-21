@@ -102,7 +102,7 @@ model UserInfo {
   dependents    Int
 
   // Income
-  monthlyIncome     Float
+  monthlyIncome   Float
   extraIncome     Float
   occupation      String
   incomeFrequency IncomeFrequency

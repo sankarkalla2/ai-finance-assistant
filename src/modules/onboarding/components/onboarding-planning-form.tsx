@@ -331,7 +331,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                         <motion.div variants={fadeInUp} className="space-y-2">
                           <Label htmlFor="sideIncome">
                             Extra Income
-                            <span className="text-sm text-muted-foreground">
+                            <span className="text-xs text-muted-foreground">
                               (side hustles, rental, etc)
                             </span>
                           </Label>
