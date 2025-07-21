@@ -67,13 +67,13 @@ export const auth = betterAuth({
         },
         request // The original request object (optional)
       ) => {
-        // const { data: res, error } = await resend.emails.send({
-        //   from: "Ask Your Finance <no-reply@updates.askyourfinance.site>",
-        //   to: user.email,
+        const { data: res, error } = await resend.emails.send({
+          from: "Ask Your Finance <no-reply@updates.askyourfinance.site>",
+          to: user.email,
 
-        //   subject: "Confirm Account Deletion",
-        //   react: DeleteAccountEmail({ deleteLink: url }),
-        // });
+          subject: "Confirm Account Deletion",
+          react: DeleteAccountEmail({ deleteLink: url }),
+        });
       },
     },
   },
