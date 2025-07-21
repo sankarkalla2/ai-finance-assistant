@@ -34,9 +34,11 @@ export const onboardNewUser = async (data: z.infer<typeof leanFormSchema>) => {
     },
   });
 
+  //EDIT later
+
   const formData = parsedContent.data;
-  const assistantPrompt = generateAIAssistantPrompt(data);
-  const previewQuestions = await generatePreviewQuestions(data);
+  const assistantPrompt = generateAIAssistantPrompt(formData);
+  const previewQuestions = await generatePreviewQuestions(formData);
 
   try {
     if (onboardingInfo) {
@@ -131,7 +133,6 @@ export const onboardNewUser = async (data: z.infer<typeof leanFormSchema>) => {
     } else {
       // Create new user info
 
-     
       const [newUserinfo] = await db.$transaction([
         db.userInfo.create({
           data: {
@@ -214,11 +215,10 @@ export const onboardNewUser = async (data: z.infer<typeof leanFormSchema>) => {
           },
         }),
       ]);
-   
+
       return { success: true, data: newUserinfo, status: 201 };
     }
   } catch (error) {
- 
     return { error: "Failed to save user information", status: 500 };
   }
 };
