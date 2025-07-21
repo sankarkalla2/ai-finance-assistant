@@ -21,9 +21,9 @@ export const useOnboarduser = (userInfo: OnboardedUserType) => {
       personalInfo: {
         name: userInfo?.userInfo?.name || "", // Empty string for placeholder
         age: userInfo?.userInfo?.age || 0, // Minimal default for numbers
-        country: userInfo?.userInfo?.country || "",
-        state: userInfo?.userInfo?.state || "",
-        dependents: userInfo?.userInfo?.dependents || 0,
+        country: userInfo?.userInfo?.country || "", // Empty string for placeholder
+        state: userInfo?.userInfo?.state || "", // Empty string for placeholder
+        dependents: userInfo?.userInfo?.dependents,
       },
       income: {
         monthlyIncome: userInfo?.userInfo?.monthlyIncome || 0,
@@ -195,7 +195,7 @@ export const useOnboarduser = (userInfo: OnboardedUserType) => {
   const onSubmit = async (data: z.infer<typeof leanFormSchema>) => {
     setIsSubmitting(true);
 
-
+    console.log(data);
     const res = await onboardNewUser(data);
     if (res.status === 200 || res.status === 201) {
       toast.success("Onboarding completed successfully");

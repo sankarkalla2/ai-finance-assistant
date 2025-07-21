@@ -59,6 +59,8 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
     isSubmitting,
   } = useOnboarduser(userInfo);
 
+  const { register } = methods;
+
   const handleCountryChange = (value: string) => {
     methods.setValue("personalInfo.country", value, { shouldValidate: true });
   };
@@ -89,8 +91,8 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                   index < currentStep
                     ? "bg-primary"
                     : index === currentStep
-                    ? "bg-primary ring-4 ring-primary/20"
-                    : "bg-muted"
+                      ? "bg-primary ring-4 ring-primary/20"
+                      : "bg-muted"
                 )}
                 onClick={() => {
                   if (index <= currentStep) {
@@ -181,23 +183,33 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                           name="personalInfo.age"
                           control={control}
                           render={({ field }) => (
-                            <Input
-                              {...field}
-                              id="age"
-                              type="number"
-                              placeholder="Enter your age"
-                              onChange={(e) =>
-                                field.onChange(
-                                  Number.parseInt(e.target.value) || 0
-                                )
-                              }
-                              className={cn(
-                                "transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary",
-                                errors.personalInfo?.age && "border-red-500"
+                            <div>
+                              <Input
+                                id="age"
+                                type="number"
+                                placeholder="Enter your age"
+                                value={field.value ?? ""}
+                                onChange={(e) =>
+                                  field.onChange(
+                                    e.target.value === ""
+                                      ? ""
+                                      : Number.parseInt(e.target.value) || 0
+                                  )
+                                }
+                                className={cn(
+                                  "transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary",
+                                  errors.personalInfo?.age && "border-red-500"
+                                )}
+                              />
+                              {errors.personalInfo?.age && (
+                                <p className="text-sm text-red-500">
+                                  {errors.personalInfo.age.message}
+                                </p>
                               )}
-                            />
+                            </div>
                           )}
                         />
+
                         {errors.personalInfo?.age && (
                           <p className="text-sm text-red-500">
                             {errors.personalInfo.age.message}
@@ -233,6 +245,11 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                               />
                             )}
                           />
+                          {errors.personalInfo?.country && (
+                            <p className="text-sm text-red-500">
+                              {errors.personalInfo.country.message}
+                            </p>
+                          )}
                         </motion.div>
 
                         {/* <motion.div variants={fadeInUp} className="space-y-2">
@@ -262,6 +279,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                               {...field}
                               id="dependents"
                               type="number"
+                              value={field.value ?? ""}
                               placeholder="0"
                               onChange={(e) =>
                                 field.onChange(
@@ -297,6 +315,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                               <Input
                                 {...field}
                                 id="monthlyIncome"
+                                value={field.value ?? ""}
                                 type="number"
                                 placeholder="Enter your monthly income"
                                 onChange={(e) =>
@@ -324,6 +343,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                                 {...field}
                                 id="sideIncome"
                                 type="number"
+                                value={field.value || ""}
                                 placeholder="Enter your side income"
                                 onChange={(e) =>
                                   field.onChange(
@@ -460,6 +480,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                           render={({ field }) => (
                             <Input
                               {...field}
+                              value={field.value || ""}
                               id="totalMonthlyExpenses"
                               type="number"
                               placeholder="Total monthly expenses"
@@ -484,6 +505,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                               <Input
                                 {...field}
                                 id="housing"
+                                value={field.value || ""}
                                 type="number"
                                 placeholder="Housing costs"
                                 onChange={(e) =>
@@ -505,6 +527,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                             render={({ field }) => (
                               <Input
                                 {...field}
+                                value={field.value || ""}
                                 id="transportation"
                                 type="number"
                                 placeholder="Transportation costs"
@@ -531,6 +554,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                                 {...field}
                                 id="food"
                                 type="number"
+                                value={field.value || ""}
                                 placeholder="Food expenses"
                                 onChange={(e) =>
                                   field.onChange(
@@ -554,6 +578,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                                 id="subscriptions"
                                 type="number"
                                 placeholder="Subscription costs"
+                                value={field.value || ""}
                                 onChange={(e) =>
                                   field.onChange(
                                     Number.parseFloat(e.target.value) || 0
@@ -577,6 +602,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                                 {...field}
                                 id="education"
                                 type="number"
+                                value={field.value || ""}
                                 placeholder="Education expenses"
                                 onChange={(e) =>
                                   field.onChange(
@@ -597,6 +623,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                             render={({ field }) => (
                               <Input
                                 {...field}
+                                value={field.value || ""}
                                 id="miscallaneous"
                                 type="number"
                                 placeholder="Miscallaneous costs"
@@ -635,6 +662,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                               {...field}
                               id="totalDebt"
                               type="number"
+                              value={field.value || ""}
                               placeholder="Total outstanding debt"
                               onChange={(e) =>
                                 field.onChange(
@@ -657,6 +685,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                           render={({ field }) => (
                             <Input
                               {...field}
+                              value={field.value || ""}
                               id="monthlyDebtPayment"
                               type="number"
                               placeholder="Monthly debt payments"
@@ -680,6 +709,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                             <Input
                               {...field}
                               id="creditScore"
+                              value={field.value || ""}
                               type="number"
                               placeholder="Credit score (300-850)"
                               onChange={(e) =>
@@ -789,10 +819,13 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                                     fieldState: { error },
                                   }) => (
                                     <div className="space-y-2">
-                                      <Label htmlFor="amount">Amount</Label>
+                                      <Label htmlFor="amount">
+                                        Monthly Payment
+                                      </Label>
                                       <Input
                                         {...field}
                                         type="number"
+                                        value={field.value || ""}
                                         placeholder="monthlyDebtPayment"
                                         aria-label={`Debt ${
                                           index + 1
@@ -831,6 +864,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                                         {...field}
                                         type="number"
                                         placeholder="Balance"
+                                        value={field.value || ""}
                                         aria-label={`Debt ${index + 1} Balance`}
                                         onChange={(e) =>
                                           field.onChange(
@@ -876,6 +910,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                               <Input
                                 {...field}
                                 id="cashSavings"
+                                value={field.value || ""}
                                 type="number"
                                 placeholder="Cash savings"
                                 onChange={(e) =>
@@ -897,6 +932,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                             render={({ field }) => (
                               <Input
                                 {...field}
+                                value={field.value || ""}
                                 id="investments"
                                 type="number"
                                 placeholder="Investment value"
@@ -923,6 +959,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                             render={({ field }) => (
                               <Input
                                 {...field}
+                                value={field.value || ""}
                                 id="retirementSavings"
                                 type="number"
                                 placeholder="Retirement savings"
@@ -949,6 +986,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                                 {...field}
                                 id="realEstateValue"
                                 type="number"
+                                value={field.value || ""}
                                 placeholder="Real estate value"
                                 onChange={(e) =>
                                   field.onChange(
@@ -1015,26 +1053,40 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                                 name={`goals.goals.${index}.description`}
                                 control={control}
                                 render={({ field }) => (
-                                  <Input
-                                    {...field}
-                                    placeholder="Goal description"
-                                  />
+                                  <div className="space-y-2">
+                                    <Label
+                                      htmlFor={`goals.goals.${index}.description`}
+                                    >
+                                      Goal Description
+                                    </Label>
+                                    <Input
+                                      {...field}
+                                      placeholder="Goal description"
+                                    />
+                                  </div>
                                 )}
                               />
                               <Controller
                                 name={`goals.goals.${index}.targetAmount`}
                                 control={control}
                                 render={({ field }) => (
-                                  <Input
-                                    {...field}
-                                    type="number"
-                                    placeholder="Target amount"
-                                    onChange={(e) =>
-                                      field.onChange(
-                                        Number.parseFloat(e.target.value) || 0
-                                      )
-                                    }
-                                  />
+                                  <div className="space-y-2">
+                                    <Label
+                                      htmlFor={`goals.goals.${index}.targetAmount`}
+                                    >
+                                      Target Amount
+                                    </Label>
+                                    <Input
+                                      {...field}
+                                      type="number"
+                                      placeholder="Target amount"
+                                      onChange={(e) =>
+                                        field.onChange(
+                                          Number.parseFloat(e.target.value) || 0
+                                        )
+                                      }
+                                    />
+                                  </div>
                                 )}
                               />
                             </div>
@@ -1043,31 +1095,44 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                                 name={`goals.goals.${index}.timeline`}
                                 control={control}
                                 render={({ field }) => (
-                                  <Input
-                                    {...field}
-                                    placeholder="Timeline (e.g., 5 years)"
-                                  />
+                                  <div className="space-y-2">
+                                    <Label
+                                      htmlFor={`goals.goals.${index}.timeline`}
+                                    >
+                                      Time to Achieve Goal
+                                    </Label>
+                                    <Input
+                                      {...field}
+                                      placeholder="Timeline (e.g., 5 years)"
+                                      value={field.value || ""}
+                                    />
+                                  </div>
                                 )}
                               />
                               <Controller
                                 name={`goals.goals.${index}.priority`}
                                 control={control}
                                 render={({ field }) => (
-                                  <Select
-                                    value={field.value}
-                                    onValueChange={field.onChange}
-                                  >
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Priority" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      <SelectItem value="high">High</SelectItem>
-                                      <SelectItem value="medium">
-                                        Medium
-                                      </SelectItem>
-                                      <SelectItem value="low">Low</SelectItem>
-                                    </SelectContent>
-                                  </Select>
+                                  <div className="space-y-2">
+                                    <Label>Priority</Label>
+                                    <Select
+                                      value={field.value}
+                                      onValueChange={field.onChange}
+                                    >
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Priority" />
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                        <SelectItem value="high">
+                                          High
+                                        </SelectItem>
+                                        <SelectItem value="medium">
+                                          Medium
+                                        </SelectItem>
+                                        <SelectItem value="low">Low</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  </div>
                                 )}
                               />
                             </div>
@@ -1119,6 +1184,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                               {...field}
                               id="retirementAge"
                               type="number"
+                              value={field.value || ""}
                               placeholder="Desired retirement age"
                               onChange={(e) =>
                                 field.onChange(
@@ -1164,6 +1230,7 @@ const FinancialPlanningForm = (userInfo: OnboardedUserType) => {
                               {...field}
                               id="monthsCovered"
                               type="number"
+                              value={field.value || ""}
                               placeholder="Number of months your emergency fund covers"
                               onChange={(e) =>
                                 field.onChange(

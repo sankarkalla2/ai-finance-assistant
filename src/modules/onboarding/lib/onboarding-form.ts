@@ -8,7 +8,7 @@ export const leanFormSchema = z.object({
       .min(18, "Age must be at least 18")
       .max(100, "Age must be less than 100"),
     country: z.string().min(1, "Country is required"),
-    state: z.string().min(1, "State is required").optional(),
+    state: z.string().min(1, "State is required"),
     dependents: z.number().min(0, "Dependents cannot be negative"),
   }),
   income: z.object({
@@ -40,7 +40,11 @@ export const leanFormSchema = z.object({
     monthlyDebtPayment: z
       .number()
       .min(0, "Monthly debt payment cannot be negative"),
-    creditScore: z.number().optional(),
+    creditScore: z
+      .number()
+      .min(300)
+      .max(850, "Credit score must be between 300 and 850")
+      .optional(),
 
     deptBreakDown: z.array(
       z.object({
