@@ -1,6 +1,7 @@
+import { getUserInfo } from "@/app/server/user";
 import { auth } from "@/lib/auth";
 import FinancialPlanningForm from "@/modules/onboarding/components/onboarding-planning-form";
-import { getUserInfo } from "@/modules/onboarding/server/onboarding-user";
+
 
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";

@@ -5,6 +5,7 @@ import {
   AudioWaveform,
   BookOpen,
   Bot,
+  ChartLine,
   Command,
   CommandIcon,
   CreditCard,
@@ -147,10 +148,28 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           )}
           {session && session?.data?.user && (
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip={"Onboarding"} isActive={pathname === "/onboarding"}>
+              <SidebarMenuButton
+                asChild
+                tooltip={"Onboarding"}
+                isActive={pathname === "/onboarding"}
+              >
                 <Link href="/onboarding">
                   <UserPlus />
                   Onboarding
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          )}
+          {session && session?.data?.user && (
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                tooltip={"Analytics"}
+                isActive={pathname === "/analytics"}
+              >
+                <Link href="/analytics">
+                  <ChartLine />
+                  Analytics
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

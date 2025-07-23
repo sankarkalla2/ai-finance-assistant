@@ -11,24 +11,6 @@ export const deleteUserAccont = async () => {
     });
     if (!session?.user) return { status: 401, message: "You are autheticed." };
 
-    // const account = await db.user.findUnique({
-    //   where: {
-    //     id: session.user.id,
-    //   },
-    //   select: {
-    //     id: true,
-    //   },
-    // });
-    // if (!account) return { status: 404, message: "User not foudn" };
-
-    // await db.user.delete({
-    //   where: {
-    //     id: account.id,u
-    //   },
-    //   select: {
-    //     id: true,
-    //   },
-    // });
     const res = await auth.api.deleteUser({ body: {} });
     if (res.success) {
       return { status: 200, message: res.message };
@@ -56,5 +38,24 @@ export const isUserExisted = async (email: string) => {
       isUserExisted: false,
       message: "Internal server error.",
     };
+  }
+};
+
+export const getUserInfo = async (userId: string) => {
+  try {
+    const userInfo = await db.userInfo.findUnique({
+      where: {
+        userId,
+      },
+      include: {
+        goals: true,
+        deptBreakDowns: true,
+      },
+    });
+
+    return { success: true, data: userInfo, status: 200 };
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    return { error: "Failed to fetch user information", status: 500 };
   }
 };

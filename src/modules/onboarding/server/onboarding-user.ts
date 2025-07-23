@@ -40,6 +40,7 @@ export const onboardNewUser = async (data: z.infer<typeof leanFormSchema>) => {
   const assistantPrompt = generateAIAssistantPrompt(formData);
   const previewQuestions = await generatePreviewQuestions(formData);
 
+
   try {
     if (onboardingInfo) {
       // Update existing user info
@@ -223,24 +224,7 @@ export const onboardNewUser = async (data: z.infer<typeof leanFormSchema>) => {
   }
 };
 
-export const getUserInfo = async (userId: string) => {
-  try {
-    const userInfo = await db.userInfo.findUnique({
-      where: {
-        userId,
-      },
-      include: {
-        goals: true,
-        deptBreakDowns: true,
-      },
-    });
 
-    return { success: true, data: userInfo, status: 200 };
-  } catch (error) {
-    console.error("Error fetching user info:", error);
-    return { error: "Failed to fetch user information", status: 500 };
-  }
-};
 
 export const hasCompletedOnboarding = async (userId: string) => {
   try {
