@@ -56,7 +56,9 @@ export function NavMain({
               <Link href={`/chat/${item.id}`}>
                 <ChevronsRight className="text-primary" />
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate text-xs font-medium">{item.title}</span>
+                  <span className="truncate text-xs font-medium">
+                    {item.title}
+                  </span>
                   <span className="truncate text-xs text-muted-foreground">
                     {formatDateWithTime(item.createdAt)}
                   </span>
