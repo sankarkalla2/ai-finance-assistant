@@ -13,11 +13,20 @@ interface FinancialOverviewType {
   };
 }
 export function FinancialOverview({ financialData }: FinancialOverviewType) {
+  const getCreditScore = (score: number): string => {
+    if (score < 300) return "No Credit Score";
+    if (score < 560) return "Poor Credit Score";
+    if (score < 660) return "Fair Credit Score";
+    if (score < 725) return "Good Credit Score";
+    if (score < 760) return "Very Good Credit Score";
+    return "Excellent Credit Score";
+  };
+
   const cards = [
     {
       title: "Net Worth",
       value: `$${financialData.netWorth.toLocaleString()}`,
-      description: "+12% from last month",
+      description: "Total assets - Total debt",
       icon: TrendingUp,
       trend: "up",
     },
@@ -38,7 +47,7 @@ export function FinancialOverview({ financialData }: FinancialOverviewType) {
     {
       title: "Credit Score",
       value: financialData.creditScore.toString(),
-      description: "Excellent credit",
+      description: getCreditScore(financialData.creditScore),
       icon: TrendingUp,
       trend: "up",
     },
