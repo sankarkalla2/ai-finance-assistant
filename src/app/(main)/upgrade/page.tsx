@@ -13,15 +13,15 @@ import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Upgrade-AskYourFinance", 
+    absolute: "Upgrade-AskYourFinance",
   },
   description: "Upgrade for AskYourFinance",
 };
 const Upgrade = async () => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  if (!session?.user) return redirect("/sign-in");
+  // const session = await auth.api.getSession({
+  //   headers: await headers(),
+  // });
+  // if (!session?.user) return redirect("/sign-in");
 
   const client = new QueryClient();
   void client.prefetchQuery({
