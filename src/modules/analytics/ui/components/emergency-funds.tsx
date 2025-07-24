@@ -8,6 +8,7 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Shield, AlertCircle, CheckCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface EmergencyFundStatusProps {
   emergencyFundStatus: {
@@ -79,7 +80,6 @@ export function EmergencyFundStatus({
           </div>
           <Badge className={statusInfo.color}>{statusInfo.status}</Badge>
         </div>
-
         {/* Progress Bar */}
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
@@ -91,7 +91,6 @@ export function EmergencyFundStatus({
             className="h-3 max-w-screen"
           />
         </div>
-
         {/* Key Metrics */}
         <div className="grid grid-cols-2 gap-4">
           <div className="p-3 bg-muted/50 rounded-lg">
@@ -114,7 +113,6 @@ export function EmergencyFundStatus({
             </p>
           </div>
         </div>
-
         {/* Status Message and Recommendations */}
         <div className="p-3 bg-blue-50 rounded-lg">
           <p className="text-sm text-blue-800 mb-2">{statusInfo.message}</p>
@@ -131,6 +129,16 @@ export function EmergencyFundStatus({
             </div>
           )}
         </div>
+
+        {/* <div className="relative bg-accent/10 p-6 rounded-2xl w-full h-[200px] overflow-hidden">
+          <div className="absolute inset-0 bg-accent/80 backdrop-blur-md flex flex-col items-center justify-center z-10 rounded-2xl">
+            <h3 className="text-xl font-semibold text-primary mb-4 text-center">
+              Upgrade to unlock personalized insights
+            </h3>
+            <Button className="text-base px-6 py-3">Upgrade Now</Button>
+          </div>
+        </div> */}
+        {/* Optionally, add any blurred content here */}
       </CardContent>
     </Card>
   );

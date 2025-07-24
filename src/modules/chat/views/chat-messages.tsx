@@ -135,7 +135,7 @@ export function ChatMessages({
         {messages.map((message, idx) => (
           <div
             key={idx}
-            className="mb-4 flex gap-x-2 items-start justify-start rounded-md leading-7 [&:not(:first-child)]:mt-6"
+            className="mb-4 flex gap-x-2 items-start justify-start rounded-md leading-7 [&:not(:first-child)]:mt-6 text-sm md:text-base"
           >
             <span>
               {message.role === "user" ? (

@@ -35,9 +35,25 @@ const AnalyticsPageView = ({ userId }: AnalyticsPageViewProps) => {
     }
   };
 
-  if (!data) return null;
-  if (isError) return <div>Something went wrong</div>;
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
+        Loading...
+      </div>
+    );
+  if (isError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
+        Error fetching user data. Please try again later or contact support.
+      </div>
+    );
+  }
+  if (!data || !data.data)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
+        No user data available
+      </div>
+    );
 
   const totalIncome =
     (data.data?.monthlyIncome || 0) + (data?.data?.extraIncome || 0);
@@ -154,7 +170,7 @@ const AnalyticsPageView = ({ userId }: AnalyticsPageViewProps) => {
     miscellaneous: data.data?.miscellaneous || 0,
     totalExpenses: data.data?.totalMonthlyExpenses || 0,
     totalMonthlyIncome: totalMonthlyIncome,
-  }
+  };
 
   return (
     <div className="container mx-auto p-6 space-y-6">
@@ -172,8 +188,12 @@ const AnalyticsPageView = ({ userId }: AnalyticsPageViewProps) => {
       <Tabs defaultValue="overview" className="w-full  space-y-6">
         <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="goals" disabled>Goals</TabsTrigger>
-          <TabsTrigger value="ai-insights" disabled>AI Insights</TabsTrigger>
+          <TabsTrigger value="goals" disabled>
+            Goals
+          </TabsTrigger>
+          <TabsTrigger value="ai-insights" disabled>
+            AI Insights
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
@@ -188,7 +208,7 @@ const AnalyticsPageView = ({ userId }: AnalyticsPageViewProps) => {
             </div>
             <div className="space-y-6">
               <RiskAssessment riskTolerance={riskTolerance} />
-              <SpendingAnalysis expenses={expenses}/>
+              <SpendingAnalysis expenses={expenses} />
             </div>
           </div>
         </TabsContent>
