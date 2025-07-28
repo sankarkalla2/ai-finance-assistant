@@ -16,6 +16,10 @@ export const metadata: Metadata = {
     absolute: "Upgrade-AskYourFinance",
   },
   description: "Upgrade for AskYourFinance",
+  robots: {
+    follow: true,
+    index: true,
+  },
 };
 const Upgrade = async () => {
   // const session = await auth.api.getSession({

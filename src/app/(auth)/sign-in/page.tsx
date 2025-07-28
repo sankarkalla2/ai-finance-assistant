@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     absolute: "Sign In-AskYourFinance",
   },
   description: "Sign In for AskYourFinance",
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 export default async function SignIn() {
   const session = await auth.api.getSession({
