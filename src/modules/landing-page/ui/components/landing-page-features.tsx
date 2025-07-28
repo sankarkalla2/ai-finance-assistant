@@ -1,5 +1,6 @@
 import {
   BotMessageSquare,
+  CheckLine,
   MonitorSmartphone,
   PiggyBank,
   Shield,
@@ -18,6 +19,11 @@ const features = [
     title: "Investment Guidance",
     description:
       "Receive tailored investment strategies based on your risk tolerance, goals, and current financial situation.",
+  },
+  {
+    icon: CheckLine,
+    title: 'Advanced Analytics',
+    description:  "Understand your financial health and make informed decisions with our advanced analytics tools.",
   },
   {
     icon: Shield,

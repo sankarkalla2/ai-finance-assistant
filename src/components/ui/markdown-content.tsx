@@ -137,6 +137,8 @@ const MarkdownComponents = {
     <tr className="hover:bg-muted/50 transition-colors">
       {children}
     </tr>
+
+    
   ),
   th: ({ children }: any) => (
     <th className="px-6 py-3 text-left text-xs font-semibold text-foreground uppercase tracking-wider">

@@ -7,6 +7,10 @@ export const metadata: Metadata = {
     absolute: "Chat-AskYourFinance",
   },
   description: "Chat with AskYourFinance AI Assistant",
+  robots: {
+    follow: true,
+    index: true
+  }
 };
 const ChatPage = () => {
   const id = generateId();

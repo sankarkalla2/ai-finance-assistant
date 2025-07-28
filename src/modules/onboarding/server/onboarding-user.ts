@@ -209,7 +209,7 @@ export const onboardNewUser = async (data: z.infer<typeof leanFormSchema>) => {
             prompt: assistantPrompt,
             PreviewQuestions: {
               deleteMany: {},
-              create: previewQuestions.map((question) => ({
+              create: previewQuestions.map((question:any) => ({
                 question,
               })),
             },
