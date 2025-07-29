@@ -42,7 +42,6 @@ export const leanFormSchema = z.object({
       .min(0, "Monthly debt payment cannot be negative"),
     creditScore: z
       .number()
-      .min(300)
       .max(850, "Credit score must be between 300 and 850")
       .optional(),
 
