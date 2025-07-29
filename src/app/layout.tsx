@@ -32,7 +32,7 @@ export default function RootLayout({
       <head>
         <script
           defer
-          data-website-id="68739bab3d927f1bd3dd1a63"
+          data-website-id="688835d34ba293ddffe723d4"
           data-domain="askyourfinance.site"
           src="https://datafa.st/js/script.js"
         ></script>

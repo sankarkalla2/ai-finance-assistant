@@ -221,5 +221,5 @@ export const generatePreviewQuestions = async (
     }),
   });
 
-  return response.object.questions;
+  return (response.object as { questions: string[] }).questions;
 };
