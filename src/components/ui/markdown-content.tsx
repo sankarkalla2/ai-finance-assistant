@@ -1,11 +1,14 @@
 import { marked } from "marked";
 import { memo, useMemo } from "react";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown, { Options } from "react-markdown";
 import remarkGfm from "remark-gfm";
+import type { ComponentProps, HTMLAttributes } from "react";
+import hardenReactMarkdown from "harden-react-markdown";
+import { cn } from "@/lib/utils";
 
 // Group tokens into logical Markdown blocks
 function parseMarkdownIntoLogicalBlocks(markdown: string): string[] {
-  const lines = markdown.split('\n');
+  const lines = markdown.split("\n");
   const blocks: string[] = [];
   let currentBlock: string[] = [];
   let inTable = false;
@@ -25,19 +28,19 @@ function parseMarkdownIntoLogicalBlocks(markdown: string): string[] {
     } else if (inTable && !isTableRow) {
       inTable = false;
       if (currentBlock.length > 0) {
-        blocks.push(currentBlock.join('\n').trim());
+        blocks.push(currentBlock.join("\n").trim());
         currentBlock = [];
       }
-      
+
       if (trimmedLine) {
         currentBlock.push(line);
       } else if (currentBlock.length > 0) {
-        blocks.push(currentBlock.join('\n').trim());
+        blocks.push(currentBlock.join("\n").trim());
         currentBlock = [];
       }
     } else {
-      if (trimmedLine === '' && currentBlock.length > 0) {
-        blocks.push(currentBlock.join('\n').trim());
+      if (trimmedLine === "" && currentBlock.length > 0) {
+        blocks.push(currentBlock.join("\n").trim());
         currentBlock = [];
       } else if (trimmedLine) {
         currentBlock.push(line);
@@ -46,51 +49,96 @@ function parseMarkdownIntoLogicalBlocks(markdown: string): string[] {
   }
 
   if (currentBlock.length > 0) {
-    blocks.push(currentBlock.join('\n').trim());
+    blocks.push(currentBlock.join("\n").trim());
   }
 
-  return blocks.filter(block => block.length > 0);
+  return blocks.filter((block) => block.length > 0);
 }
 
+export type ResponseProps = HTMLAttributes<HTMLDivElement> & {
+  options?: Options;
+  children: Options["children"];
+  allowedImagePrefixes?: ComponentProps<
+    ReturnType<typeof hardenReactMarkdown>
+  >["allowedImagePrefixes"];
+  allowedLinkPrefixes?: ComponentProps<
+    ReturnType<typeof hardenReactMarkdown>
+  >["allowedLinkPrefixes"];
+  defaultOrigin?: ComponentProps<
+    ReturnType<typeof hardenReactMarkdown>
+  >["defaultOrigin"];
+  parseIncompleteMarkdown?: boolean;
+};
 // Custom components using your design system
-const MarkdownComponents = {
-  h1: ({ children }: any) => (
-    <h1 className="text-3xl font-bold text-foreground mb-4 mt-6 first:mt-0 border-b border-border pb-2">
-      {children}
-    </h1>
-  ),
-  h2: ({ children }: any) => (
-    <h2 className="text-2xl font-semibold text-foreground mb-4 mt-5 first:mt-0">
-      {children}
-    </h2>
-  ),
-  h3: ({ children }: any) => (
-    <h3 className="text-xl font-semibold text-foreground mb-3 mt-4 first:mt-0">
-      {children}
-    </h3>
-  ),
-  h4: ({ children }: any) => (
-    <h4 className="text-lg font-medium text-foreground mb-2 mt-3 first:mt-0">
-      {children}
-    </h4>
-  ),
-  p: ({ children }: any) => (
-    <p className="text-muted-foreground leading-relaxed mb-4 last:mb-0">
-      {children}
-    </p>
-  ),
-  ul: ({ children }: any) => (
-    <ul className="list-disc list-inside text-muted-foreground mb-4 space-y-1 ml-4">
-      {children}
-    </ul>
-  ),
-  ol: ({ children }: any) => (
-    <ol className="list-decimal list-inside text-muted-foreground mb-4 space-y-1 ml-4">
+const MarkdownComponents: Options["components"] = {
+  ol: ({ node, children, className, ...props }) => (
+    <ol className={cn("ml-4 list-outside list-decimal", className)} {...props}>
       {children}
     </ol>
   ),
-  li: ({ children }: any) => (
-    <li className="leading-relaxed">{children}</li>
+  li: ({ node, children, className, ...props }) => (
+    <li className={cn("py-1", className)} {...props}>
+      {children}
+    </li>
+  ),
+  ul: ({ node, children, className, ...props }) => (
+    <ul className={cn("ml-4 list-outside list-decimal", className)} {...props}>
+      {children}
+    </ul>
+  ),
+  strong: ({ node, children, className, ...props }) => (
+    <span className={cn("font-semibold", className)} {...props}>
+      {children}
+    </span>
+  ),
+  a: ({ node, children, className, ...props }) => (
+    <a
+      className={cn("font-medium text-primary underline", className)}
+      rel="noreferrer"
+      target="_blank"
+      {...props}
+    >
+      {children}
+    </a>
+  ),
+  h1: ({ node, children, className, ...props }) => (
+    <h1
+      className={cn("mt-6 mb-2 font-semibold text-3xl", className)}
+      {...props}
+    >
+      {children}
+    </h1>
+  ),
+  h2: ({ node, children, className, ...props }) => (
+    <h2
+      className={cn("mt-6 mb-2 font-semibold text-2xl", className)}
+      {...props}
+    >
+      {children}
+    </h2>
+  ),
+  h3: ({ node, children, className, ...props }) => (
+    <h3 className={cn("mt-6 mb-2 font-semibold text-xl", className)} {...props}>
+      {children}
+    </h3>
+  ),
+  h4: ({ node, children, className, ...props }) => (
+    <h4 className={cn("mt-6 mb-2 font-semibold text-lg", className)} {...props}>
+      {children}
+    </h4>
+  ),
+  h5: ({ node, children, className, ...props }) => (
+    <h5
+      className={cn("mt-6 mb-2 font-semibold text-base", className)}
+      {...props}
+    >
+      {children}
+    </h5>
+  ),
+  h6: ({ node, children, className, ...props }) => (
+    <h6 className={cn("mt-6 mb-2 font-semibold text-sm", className)} {...props}>
+      {children}
+    </h6>
   ),
   blockquote: ({ children }: any) => (
     <blockquote className="border-l-4 border-primary pl-4 py-2 my-4 bg-muted text-muted-foreground italic rounded-r">
@@ -123,22 +171,12 @@ const MarkdownComponents = {
       </table>
     </div>
   ),
-  thead: ({ children }: any) => (
-    <thead className="bg-muted">
-      {children}
-    </thead>
-  ),
+  thead: ({ children }: any) => <thead className="bg-muted">{children}</thead>,
   tbody: ({ children }: any) => (
-    <tbody className="bg-card divide-y divide-border">
-      {children}
-    </tbody>
+    <tbody className="bg-card divide-y divide-border">{children}</tbody>
   ),
   tr: ({ children }: any) => (
-    <tr className="hover:bg-muted/50 transition-colors">
-      {children}
-    </tr>
-
-    
+    <tr className="hover:bg-muted/50 transition-colors">{children}</tr>
   ),
   th: ({ children }: any) => (
     <th className="px-6 py-3 text-left text-xs font-semibold text-foreground uppercase tracking-wider">
@@ -146,38 +184,30 @@ const MarkdownComponents = {
     </th>
   ),
   td: ({ children }: any) => (
-    <td className="px-6 py-4 text-sm text-muted-foreground">
-      {children}
-    </td>
+    <td className="px-6 py-4 text-sm text-muted-foreground">{children}</td>
   ),
-  strong: ({ children }: any) => (
-    <strong className="font-semibold text-foreground">
-      {children}
-    </strong>
-  ),
+ 
   em: ({ children }: any) => (
     <em className="italic text-muted-foreground">{children}</em>
   ),
-  a: ({ href, children }: any) => (
-    <a 
-      href={href} 
+  link: ({ href, children }: any) => (
+    <a
+      href={href}
       className="text-primary hover:text-primary/80 underline decoration-primary/30 hover:decoration-primary underline-offset-2 transition-colors"
-      target="_blank" 
+      target="_blank"
       rel="noopener noreferrer"
     >
       {children}
     </a>
   ),
-  hr: () => (
-    <hr className="border-0 border-t border-border my-4" />
-  ),
+  hr: () => <hr className="border-0 border-t border-border my-4" />,
 };
 
 // Memoized Markdown block renderer
 const MemoizedMarkdownBlock = memo(
   ({ content }: { content: string }) => {
     return (
-      <ReactMarkdown 
+      <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={MarkdownComponents}
       >
@@ -193,15 +223,15 @@ MemoizedMarkdownBlock.displayName = "MemoizedMarkdownBlock";
 // Main component
 export const MemoizedMarkdown = memo(
   ({ content, id }: { content: string; id: string }) => {
-    const blocks = useMemo(() => parseMarkdownIntoLogicalBlocks(content), [content]);
+    const blocks = useMemo(
+      () => parseMarkdownIntoLogicalBlocks(content),
+      [content]
+    );
 
     return (
       <div className="prose max-w-none">
         {blocks.map((block, index) => (
-          <MemoizedMarkdownBlock 
-            content={block} 
-            key={`${id}-block_${index}`} 
-          />
+          <MemoizedMarkdownBlock content={block} key={`${id}-block_${index}`} />
         ))}
       </div>
     );
