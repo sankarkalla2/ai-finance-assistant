@@ -5,6 +5,8 @@ import QueryProviders from "@/components/query-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
 
+import { GoogleAnalytics } from '@next/third-parties/google'
+
 const inter = Inter({
   subsets: ["latin"],
 });
@@ -29,15 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <script
-          defer
-          data-website-id="688835d34ba293ddffe723d4"
-          data-domain="askyourfinance.site"
-          src="https://datafa.st/js/script.js"
-        ></script>
-      </head>
+      <head></head>
       <body className={`${inter.className} antialiased`}>
+        <GoogleAnalytics gaId="GTM-MZDJCZ3C" />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
